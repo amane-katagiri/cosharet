@@ -8,9 +8,12 @@ const INSTANCES = ["mastodon", "misskey"] as const;
 export type Instance<T extends string = string> = {
   type: T;
   url: string;
+  q?: number;
 };
 export const getInstanceKey = (instance: Instance) =>
   `${instance.type}-${instance.url}`;
+export const sortInstance = (a: Instance, b: Instance) =>
+  (b.q ?? 0) - (a.q ?? 0);
 const schemaForType =
   <T>() =>
   <S extends z.ZodType<T, any, any>>(arg: S) => {
@@ -20,6 +23,7 @@ export const InstanceSchema = schemaForType<Instance>()(
   z.object({
     type: z.string(),
     url: z.string(),
+    q: z.number().optional(),
   }),
 );
 export type InstanceType = (typeof INSTANCES)[number];

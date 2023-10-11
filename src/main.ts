@@ -3,6 +3,7 @@ import {
   classify,
   generate,
   getInstanceKey,
+  sortInstance,
 } from "./instance/index.js";
 import "./css/main.css";
 import { parseUrlParams } from "./params.js";
@@ -15,7 +16,9 @@ const addApp = (id: string) => {
   const fetcherIsLoading = van.state(false);
   const fetcherError = van.state<string>("");
   const fetcherInput = van.state("");
-  const domainList = van.state(restoreState()?.domainList ?? []);
+  const domainList = van.state(
+    restoreState()?.domainList?.sort(sortInstance) ?? [],
+  );
   const selectedDomain = van.state<string | null>(
     domainList.val.length !== 0 ? getInstanceKey(domainList.val[0]) : null,
   );
@@ -34,11 +37,18 @@ const addApp = (id: string) => {
     fetcherError.val = "";
     fetcherIsLoading.val = false;
   };
-  const addDomain = (instance: Instance) => {
+  const addDomain = (instance: Instance, q?: number) => {
     domainList.val = [
-      ...domainList.val.filter((v) => v.url !== fetcherInput.val),
-      instance,
-    ];
+      { ...instance, q: q ?? Math.max(...domainList.val.map((d) => d.q ?? 0)) },
+      ...domainList.val.filter((v) => v.url !== instance.url),
+    ].sort(sortInstance);
+    updateState({ domainList: domainList.val });
+  };
+  const updateDomain = (instance: Instance, q: number = 1) => {
+    domainList.val = [
+      { ...instance, q: (instance.q ?? 0) + q },
+      ...domainList.val.filter((v) => v.url !== instance.url),
+    ].sort(sortInstance);
     updateState({ domainList: domainList.val });
   };
   const removeDomain = (url: string) => {
@@ -131,6 +141,7 @@ const addApp = (id: string) => {
             if (href == null) {
               return;
             }
+            updateDomain(instance);
             location.href = href;
           },
           disabled: () =>
