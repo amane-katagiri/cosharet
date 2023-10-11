@@ -1,27 +1,34 @@
-export type Params = { content: string | null };
+import { Theme } from "./color";
+import { defaultDarkTheme, defaultLightTheme } from "./config/theme";
+
+export type Params = { content: string | null; theme: Theme };
 
 const buildParams = (params: {
   text: string | null;
   url: string | null;
   hashtags: string | null;
 }): Params => {
-  if ((params.url ?? "") == "") {
-    return { content: null };
-  }
-  const content = [
-    params.url,
-    params.text,
-    params.hashtags
-      ?.split(",")
-      .filter((h) => !h.match(/[ #]/))
-      .map((h) => `#${h}`)
-      ?.join(" "),
-    "",
-  ]
-    .filter((item) => item != null)
-    .join(" ");
+  const theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? defaultDarkTheme
+    : defaultLightTheme;
+  const content =
+    (params.url ?? "") == ""
+      ? null
+      : [
+          params.url,
+          params.text,
+          params.hashtags
+            ?.split(",")
+            .filter((h) => !h.match(/[ #]/))
+            .map((h) => `#${h}`)
+            ?.join(" "),
+          "",
+        ]
+          .filter((item) => item != null)
+          .join(" ");
   return {
-    content: content.length !== 0 ? content : null,
+    content: (content?.length ?? 0) !== 0 ? content : null,
+    theme,
   };
 };
 

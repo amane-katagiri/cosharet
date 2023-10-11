@@ -24,5 +24,7 @@ export const restoreState = (): State | null => {
 };
 
 export const clearState = (keys: StateKey[]) => {
-  keys.map((key) => localStorage.removeItem(key));
+  if (keys.includes("instances")) {
+    localStorage.setItem(INSTAKCES_KEY, JSON.stringify(defaultInstances));
+  }
 };
