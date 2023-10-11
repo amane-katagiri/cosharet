@@ -16,11 +16,11 @@ const addApp = (id: string) => {
   const fetcherIsLoading = van.state(false);
   const fetcherError = van.state<string>("");
   const fetcherInput = van.state("");
-  const domainList = van.state(
-    restoreState()?.domainList?.sort(sortInstance) ?? [],
+  const instances = van.state(
+    restoreState()?.instances?.sort(sortInstance) ?? [],
   );
-  const selectedDomain = van.state<string | null>(
-    domainList.val.length !== 0 ? getInstanceKey(domainList.val[0]) : null,
+  const selectedInstance = van.state<string | null>(
+    instances.val.length !== 0 ? getInstanceKey(instances.val[0]) : null,
   );
 
   const params = parseUrlParams(
@@ -37,29 +37,29 @@ const addApp = (id: string) => {
     fetcherError.val = "";
     fetcherIsLoading.val = false;
   };
-  const addDomain = (instance: Instance, q?: number) => {
-    domainList.val = [
-      { ...instance, q: q ?? Math.max(...domainList.val.map((d) => d.q ?? 0)) },
-      ...domainList.val.filter((v) => v.url !== instance.url),
+  const addInstance = (instance: Instance, q?: number) => {
+    instances.val = [
+      { ...instance, q: q ?? Math.max(...instances.val.map((d) => d.q ?? 0)) },
+      ...instances.val.filter((v) => v.url !== instance.url),
     ].sort(sortInstance);
-    updateState({ domainList: domainList.val });
+    updateState({ instances: instances.val });
   };
-  const updateDomain = (instance: Instance, q: number = 1) => {
-    domainList.val = [
+  const updateInstance = (instance: Instance, q: number = 1) => {
+    instances.val = [
       { ...instance, q: (instance.q ?? 0) + q },
-      ...domainList.val.filter((v) => v.url !== instance.url),
+      ...instances.val.filter((v) => v.url !== instance.url),
     ].sort(sortInstance);
-    updateState({ domainList: domainList.val });
+    updateState({ instances: instances.val });
   };
-  const removeDomain = (instance: Instance) => {
-    domainList.val = domainList.val.filter(
+  const removeInstance = (instance: Instance) => {
+    instances.val = instances.val.filter(
       (v) => v.url !== instance.url || v.type !== instance.type,
     );
-    updateState({ domainList: domainList.val });
+    updateState({ instances: instances.val });
   };
-  const clearDomain = () => {
-    domainList.val = [];
-    clearState(["domainList"]);
+  const clearInstance = () => {
+    instances.val = [];
+    clearState(["instances"]);
   };
 
   const target = document.querySelector(`#${id}`);
@@ -80,7 +80,7 @@ const addApp = (id: string) => {
             onclick: async () => {
               try {
                 fetcherIsLoading.val = true;
-                addDomain((await classify(fetcherInput.val)).instance);
+                addInstance((await classify(fetcherInput.val)).instance);
                 resetFetcher();
               } catch (e) {
                 fetcherError.val = String(
@@ -97,10 +97,10 @@ const addApp = (id: string) => {
         button(
           {
             onclick: () => {
-              clearDomain();
+              clearInstance();
               resetFetcher();
             },
-            disabled: () => fetcherIsLoading.val || domainList.val.length === 0,
+            disabled: () => fetcherIsLoading.val || instances.val.length === 0,
           },
           "clear",
         ),
@@ -108,19 +108,19 @@ const addApp = (id: string) => {
       ]),
       () =>
         div(
-          domainList.val.map((d) =>
+          instances.val.map((d) =>
             div([
               input({
                 id: getInstanceKey(d),
                 type: "radio",
-                checked: () => selectedDomain.val === getInstanceKey(d),
-                onclick: () => (selectedDomain.val = getInstanceKey(d)),
+                checked: () => selectedInstance.val === getInstanceKey(d),
+                onclick: () => (selectedInstance.val = getInstanceKey(d)),
               }),
               label({ for: getInstanceKey(d) }, `${d.url} (${d.type})`),
               button(
                 {
                   onclick: () => {
-                    removeDomain(d);
+                    removeInstance(d);
                     resetError();
                   },
                   disabled: () => fetcherIsLoading.val,
@@ -133,8 +133,8 @@ const addApp = (id: string) => {
       button(
         {
           onclick: () => {
-            const instance = domainList.val.find(
-              (d) => getInstanceKey(d) === selectedDomain.val,
+            const instance = instances.val.find(
+              (d) => getInstanceKey(d) === selectedInstance.val,
             );
             if (params.content == null || instance == null) {
               return;
@@ -143,14 +143,14 @@ const addApp = (id: string) => {
             if (href == null) {
               return;
             }
-            updateDomain(instance);
+            updateInstance(instance);
             location.href = href;
           },
           disabled: () =>
             fetcherIsLoading.val ||
             params.content == null ||
-            !domainList.val.some(
-              (d) => getInstanceKey(d) === selectedDomain.val,
+            !instances.val.some(
+              (d) => getInstanceKey(d) === selectedInstance.val,
             ),
         },
         "share",
