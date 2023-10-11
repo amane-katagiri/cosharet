@@ -8,7 +8,7 @@ import {
 import "./css/main.css";
 import { parseUrlParams } from "./params.js";
 import { updateState, restoreState, clearState } from "./state.js";
-import van from "./van/van-1.2.1.js";
+import van from "vanjs-core";
 
 const { div, input, button, label } = van.tags;
 
