@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Instance, InstanceSchema } from "./classifier";
+import { Instance, InstanceSchema } from "./instance";
 
 const DOMAINLIST_KEY = "domainList";
 

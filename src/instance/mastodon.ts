@@ -1,7 +1,8 @@
-import { Classifier } from ".";
+import { Classifier, Generator, Instance } from ".";
 import { NETWORK_ERROR_MESSAGE, UNKNOWN_INSTANCE_MESSAGE } from "../messages";
 
-const classifier: Classifier<"mastodon"> = async (domain: string) => {
+/** @package */
+export const classify: Classifier<"mastodon"> = async (domain: string) => {
   try {
     const response = await (
       await fetch(`https://${domain}/api/v1/instance`)
@@ -15,4 +16,10 @@ const classifier: Classifier<"mastodon"> = async (domain: string) => {
   throw new Error(UNKNOWN_INSTANCE_MESSAGE);
 };
 
-export default classifier;
+/** @package */
+export const generate: Generator = (instance: Instance, content: string) => {
+  if (instance.type !== "mastodon") {
+    return null;
+  }
+  return `https://${instance.url}/share?text=${encodeURIComponent(content)}`;
+};

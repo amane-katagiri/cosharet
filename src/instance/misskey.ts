@@ -1,7 +1,8 @@
-import { Classifier } from ".";
+import { Classifier, Generator, Instance } from ".";
 import { NETWORK_ERROR_MESSAGE, UNKNOWN_INSTANCE_MESSAGE } from "../messages";
 
-const classifier: Classifier<"misskey"> = async (domain: string) => {
+/** @package */
+export const classify: Classifier<"misskey"> = async (domain: string) => {
   try {
     const response = await (await fetch(`https://${domain}/api/meta`)).json();
     if (response.version) {
@@ -13,4 +14,10 @@ const classifier: Classifier<"misskey"> = async (domain: string) => {
   throw new Error(UNKNOWN_INSTANCE_MESSAGE);
 };
 
-export default classifier;
+/** @package */
+export const generate: Generator = (instance: Instance, content: string) => {
+  if (instance.type !== "misskey") {
+    return null;
+  }
+  return `https://${instance.url}/share?text=${encodeURIComponent(content)}`;
+};
