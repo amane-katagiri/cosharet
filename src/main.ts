@@ -51,8 +51,10 @@ const addApp = (id: string) => {
     ].sort(sortInstance);
     updateState({ domainList: domainList.val });
   };
-  const removeDomain = (url: string) => {
-    domainList.val = domainList.val.filter((v) => v.url !== url);
+  const removeDomain = (instance: Instance) => {
+    domainList.val = domainList.val.filter(
+      (v) => v.url !== instance.url || v.type !== instance.type,
+    );
     updateState({ domainList: domainList.val });
   };
   const clearDomain = () => {
@@ -95,16 +97,6 @@ const addApp = (id: string) => {
         button(
           {
             onclick: () => {
-              removeDomain(fetcherInput.val);
-              resetFetcher();
-            },
-            disabled: () => fetcherIsLoading.val || fetcherInput.val === "",
-          },
-          "remove",
-        ),
-        button(
-          {
-            onclick: () => {
               clearDomain();
               resetFetcher();
             },
@@ -125,6 +117,16 @@ const addApp = (id: string) => {
                 onclick: () => (selectedDomain.val = getInstanceKey(d)),
               }),
               label({ for: getInstanceKey(d) }, `${d.url} (${d.type})`),
+              button(
+                {
+                  onclick: () => {
+                    removeDomain(d);
+                    resetError();
+                  },
+                  disabled: () => fetcherIsLoading.val,
+                },
+                "x",
+              ),
             ]),
           ),
         ),
