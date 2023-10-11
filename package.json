@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "vanjs-core": "^1.2.1",
+    "vanjs-ui": "^0.8.1",
     "zod": "^3.22.4"
   }
 }
