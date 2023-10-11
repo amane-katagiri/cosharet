@@ -9,8 +9,15 @@ import "./css/main.css";
 import { parseUrlParams } from "./params.js";
 import { updateState, restoreState, clearState } from "./state.js";
 import van from "vanjs-core";
+import {
+  INSTANCES_CLEAR_BUTTON_LABEL,
+  INSTANCES_REMOVE_BUTTON_LABEL,
+  INSTANCES_SHARE_BUTTON_LABEL,
+  NO_SHARE_CONTENT_ERROR_MESSAGE,
+  SHARE_CONTENT_DESCRIPTION,
+} from "./messages.js";
 
-const { div, input, button, label } = van.tags;
+const { div, input, button, textarea } = van.tags;
 
 const addApp = (id: string) => {
   const fetcherIsLoading = van.state(false);
@@ -22,6 +29,7 @@ const addApp = (id: string) => {
   const selectedInstance = van.state<string | null>(
     instances.val.length !== 0 ? getInstanceKey(instances.val[0]) : null,
   );
+  const isNavigating = van.state(false);
 
   const params = parseUrlParams(
     new URLSearchParams(
@@ -66,94 +74,183 @@ const addApp = (id: string) => {
   if (target != null) {
     van.add(
       target,
-      div([
-        input({
-          value: fetcherInput,
-          oninput: (e) => {
-            fetcherInput.val = e.target.value;
-            resetError();
-          },
-          disabled: fetcherIsLoading,
-        }),
-        button(
-          {
-            onclick: async () => {
-              try {
-                fetcherIsLoading.val = true;
-                addInstance((await classify(fetcherInput.val)).instance);
-                resetFetcher();
-              } catch (e) {
-                fetcherError.val = String(
-                  e instanceof AggregateError ? e.errors[0] : e,
-                );
-              } finally {
-                fetcherIsLoading.val = false;
-              }
-            },
-            disabled: () => fetcherIsLoading.val || fetcherInput.val === "",
-          },
-          "fetch",
-        ),
-        button(
-          {
-            onclick: () => {
-              clearInstance();
-              resetFetcher();
-            },
-            disabled: () => fetcherIsLoading.val || instances.val.length === 0,
-          },
-          "clear",
-        ),
-        div(fetcherError),
-      ]),
+      () =>
+        params.content != null
+          ? div(
+              div(SHARE_CONTENT_DESCRIPTION),
+              textarea(
+                {
+                  style: `
+            width: 100%;
+            max-width: 480px;
+            box-sizing: border-box;
+            `,
+                  readonly: true,
+                  rows: 3,
+                },
+                params.content,
+              ),
+            )
+          : div(NO_SHARE_CONTENT_ERROR_MESSAGE),
       () =>
         div(
-          instances.val.map((d) =>
-            div([
-              input({
-                id: getInstanceKey(d),
-                type: "radio",
-                checked: () => selectedInstance.val === getInstanceKey(d),
-                onclick: () => (selectedInstance.val = getInstanceKey(d)),
+          {
+            style: `
+              margin: 1em 0;
+              max-width: 480px;
+              min-height: 480px;
+              background: ghostwhite;
+              ${
+                isNavigating.val
+                  ? `
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                `
+                  : ``
+              }
+              `,
+          },
+          isNavigating.val
+            ? "..."
+            : instances.val.map((instance) => {
+                const selected =
+                  selectedInstance.val === getInstanceKey(instance);
+                return div(
+                  {
+                    style: () => `
+                  display: flex;
+                  justify-content: space-between;
+                  height: 1.5em;
+                  padding: 1em;
+                  background: ${selected ? `lemonchiffon` : `aliceblue`};
+                  `,
+
+                    onclick: () => {
+                      selectedInstance.val = getInstanceKey(instance);
+                    },
+                  },
+                  [
+                    div(`${instance.url} (${instance.type})`),
+                    () =>
+                      selected
+                        ? div(
+                            {
+                              style: `
+                                display: flex;
+                                gap: 0.5em;
+                                `,
+                            },
+                            () =>
+                              params.content != null
+                                ? button(
+                                    {
+                                      onclick: () => {
+                                        if (params.content == null) {
+                                          return;
+                                        }
+                                        const href = generate(
+                                          instance,
+                                          params.content,
+                                        );
+                                        if (href == null) {
+                                          return;
+                                        }
+                                        isNavigating.val = true;
+                                        updateInstance(instance);
+                                        location.href = href;
+                                      },
+                                    },
+                                    INSTANCES_SHARE_BUTTON_LABEL,
+                                  )
+                                : "",
+                            button(
+                              {
+                                onclick: () => {
+                                  removeInstance(instance);
+                                  resetError();
+                                },
+                                disabled: () => fetcherIsLoading.val,
+                              },
+                              INSTANCES_REMOVE_BUTTON_LABEL,
+                            ),
+                          )
+                        : "",
+                  ],
+                );
               }),
-              label({ for: getInstanceKey(d) }, `${d.url} (${d.type})`),
+        ),
+      div(
+        {
+          style: `
+            margin: 0 1em;
+            `,
+        },
+        div(
+          {
+            style: `
+              display: flex;
+              flex-direction: column;
+              gap: 1em;
+              `,
+          },
+          [
+            div(
+              {
+                style: `
+                  display: flex;
+                  gap: 0.5em;
+                  `,
+              },
+              [
+                input({
+                  value: fetcherInput,
+                  oninput: (e) => {
+                    fetcherInput.val = e.target.value;
+                    resetError();
+                  },
+                  disabled: fetcherIsLoading,
+                }),
+                button(
+                  {
+                    onclick: async () => {
+                      try {
+                        fetcherIsLoading.val = true;
+                        addInstance(
+                          (await classify(fetcherInput.val)).instance,
+                        );
+                        resetFetcher();
+                      } catch (e) {
+                        fetcherError.val = String(
+                          e instanceof AggregateError ? e.errors[0] : e,
+                        );
+                      } finally {
+                        fetcherIsLoading.val = false;
+                      }
+                    },
+                    disabled: () =>
+                      fetcherIsLoading.val || fetcherInput.val === "",
+                  },
+                  "追加",
+                ),
+              ],
+            ),
+            div(
               button(
                 {
                   onclick: () => {
-                    removeInstance(d);
-                    resetError();
+                    clearInstance();
+                    resetFetcher();
                   },
-                  disabled: () => fetcherIsLoading.val,
+                  disabled: () =>
+                    fetcherIsLoading.val || instances.val.length === 0,
                 },
-                "x",
+                INSTANCES_CLEAR_BUTTON_LABEL,
               ),
-            ]),
-          ),
-        ),
-      button(
-        {
-          onclick: () => {
-            const instance = instances.val.find(
-              (d) => getInstanceKey(d) === selectedInstance.val,
-            );
-            if (params.content == null || instance == null) {
-              return;
-            }
-            const href = generate(instance, params.content);
-            if (href == null) {
-              return;
-            }
-            updateInstance(instance);
-            location.href = href;
-          },
-          disabled: () =>
-            fetcherIsLoading.val ||
-            params.content == null ||
-            !instances.val.some(
-              (d) => getInstanceKey(d) === selectedInstance.val,
+              div(fetcherError),
             ),
-        },
-        "share",
+          ],
+        ),
       ),
     );
   }

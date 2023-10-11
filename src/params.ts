@@ -8,19 +8,20 @@ const buildParams = (params: {
   if ((params.url ?? "") == "") {
     return { content: null };
   }
+  const content = [
+    params.url,
+    params.text,
+    params.hashtags
+      ?.split(",")
+      .filter((h) => !h.match(/[ #]/))
+      .map((h) => `#${h}`)
+      ?.join(" "),
+    "",
+  ]
+    .filter((item) => item != null)
+    .join(" ");
   return {
-    content: [
-      params.url,
-      params.text,
-      params.hashtags
-        ?.split(",")
-        .filter((h) => !h.match(/[ #]/))
-        .map((h) => `#${h}`)
-        ?.join(" "),
-      "",
-    ]
-      .filter((item) => item != null)
-      .join(" "),
+    content: content.length !== 0 ? content : null,
   };
 };
 
