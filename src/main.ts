@@ -50,7 +50,6 @@ const addApp = (id: string) => {
       },
       ...instances.val.filter((v) => v.url !== instance.url),
     ].sort(sortInstance);
-    console.log(instances.val);
     updateState({ instances: instances.val });
   };
   const updateInstance = (instance: Instance, q: number = 1) => {

@@ -23,6 +23,12 @@ const DialogComponent = (
         style: `
           color: ${theme.text};
           `,
+        onkeydown: (e) => {
+          if (e?.key === "Escape") {
+            closed.val = true;
+          }
+        },
+        tabIndex: -1,
       },
       div(
         {
