@@ -5,18 +5,22 @@ export const defaultThemes: {
 } = {
   default: {
     light: {
-      text: "black",
-      background: "white",
-      componentBackground: "#eee",
-      selectedItemBackground: "moccasin",
-      accentColor: "darkorchid",
+      text: import.meta.env.VITE_THEME_LIGHT_TEXT_COLOR,
+      background: import.meta.env.VITE_THEME_LIGHT_BACKGROUND_COLOR,
+      componentBackground: import.meta.env
+        .VITE_THEME_LIGHT_COMPONENT_BACKGROUND_COLOR,
+      selectedItemBackground: import.meta.env
+        .VITE_THEME_LIGHT_SELECTED_ITEM_BACKGROUND_COLOR,
+      accentColor: import.meta.env.VITE_THEME_LIGHT_ACCENT_COLOR,
     },
     dark: {
-      text: "#eee",
-      background: "#222",
-      componentBackground: "#555",
-      selectedItemBackground: "blueviolet",
-      accentColor: "gold",
+      text: import.meta.env.VITE_THEME_DARK_TEXT_COLOR,
+      background: import.meta.env.VITE_THEME_DARK_BACKGROUND_COLOR,
+      componentBackground: import.meta.env
+        .VITE_THEME_DARK_COMPONENT_BACKGROUND_COLOR,
+      selectedItemBackground: import.meta.env
+        .VITE_THEME_DARK_SELECTED_ITEM_BACKGROUND_COLOR,
+      accentColor: import.meta.env.VITE_THEME_DARK_ACCENT_COLOR,
     },
   },
 } as const;
