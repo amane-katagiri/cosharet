@@ -5,15 +5,18 @@ import { defaultInstances } from "./config/instances";
 const INSTAKCES_KEY = "instances";
 const APPEND_HASHTAG = "appendHashtag";
 const QUICK_SHARE_MODE = "quickShareMode";
+const SHOW_INSTANCE_NAME = "showInstanceName";
 
 type StateKey =
   | typeof INSTAKCES_KEY
   | typeof APPEND_HASHTAG
-  | typeof QUICK_SHARE_MODE;
+  | typeof QUICK_SHARE_MODE
+  | typeof SHOW_INSTANCE_NAME;
 type State = {
   [INSTAKCES_KEY]?: Instance[] | null;
   [APPEND_HASHTAG]?: boolean | null;
   [QUICK_SHARE_MODE]?: boolean | null;
+  [SHOW_INSTANCE_NAME]?: boolean | null;
 };
 
 export const updateState = (state: State) => {
@@ -27,6 +30,12 @@ export const updateState = (state: State) => {
     localStorage.setItem(
       QUICK_SHARE_MODE,
       JSON.stringify(state.quickShareMode),
+    );
+  }
+  if (state.showInstanceName != null) {
+    localStorage.setItem(
+      SHOW_INSTANCE_NAME,
+      JSON.stringify(state.showInstanceName),
     );
   }
 };
@@ -54,6 +63,9 @@ export const restoreState = (): State | null => {
     quickShareMode: Boolean(
       jsonSafeParse(localStorage.getItem(QUICK_SHARE_MODE) ?? "false", false),
     ),
+    showInstanceName: Boolean(
+      jsonSafeParse(localStorage.getItem(SHOW_INSTANCE_NAME) ?? "false", false),
+    ),
   };
 };
 
@@ -66,5 +78,8 @@ export const clearState = (keys: StateKey[]) => {
   }
   if (keys.includes("quickShareMode")) {
     localStorage.setItem(QUICK_SHARE_MODE, JSON.stringify(false));
+  }
+  if (keys.includes("showInstanceName")) {
+    localStorage.setItem(SHOW_INSTANCE_NAME, JSON.stringify(false));
   }
 };

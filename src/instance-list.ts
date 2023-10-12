@@ -7,7 +7,7 @@ import {
 import { Theme } from "./color";
 import emoji_274c from "./emoji/274c.svg";
 
-const { div, button, img } = van.tags;
+const { div, button, img, span } = van.tags;
 
 const itemStyle = `
   display: flex;
@@ -24,6 +24,7 @@ export const InstanceList = (params: {
   instances: Instance[];
   selectedInstanceKey: string | null;
   isContentEmpty: boolean;
+  isShownInstanceName: boolean;
   onClickItem: (instance: Instance) => void;
   onClickShare: (instance: Instance) => void;
   onClickRemove: (instance: Instance) => void;
@@ -33,6 +34,7 @@ export const InstanceList = (params: {
     instances,
     selectedInstanceKey,
     isContentEmpty,
+    isShownInstanceName,
     onClickItem,
     onClickShare,
     onClickRemove,
@@ -84,7 +86,10 @@ export const InstanceList = (params: {
                       white-space: nowrap;
                       `,
                   },
-                  `${instance.url} (${instance.type})`,
+                  isShownInstanceName
+                    ? instance.name ??
+                        span({ style: "font-style: italic" }, instance.url)
+                    : instance.url,
                 ),
               ),
             () =>

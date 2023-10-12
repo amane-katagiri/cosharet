@@ -16,11 +16,15 @@ export const QUICK_SHARE_DESCRIPTION = (instance: Instance) =>
   `${instance.url}で以下の内容をシェアします。`;
 export const CONFIG_DIALOG_TITLE = "設定";
 export const QUICK_DIALOG_TITLE = import.meta.env.VITE_APP_TITLE;
-export const INSTANCES_CLEAR_DESCRIPTION = "リストをリセットする";
+export const INSTANCES_CLEAR_DESCRIPTION = "インスタンス一覧をリセットする";
+export const INSTANCES_NAME_UPDATE_DESCRIPTION =
+  "インスタンスの名前を取得・再取得する";
 export const CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION = `ハッシュタグに #${
   import.meta.env.VITE_APP_HASHTAG
 } を追加してシェアする`;
 export const CONFIG_OPEN_QUICK_SHARE_DESCRIPTION =
   "常にワンクリックでシェアする";
+export const CONFIG_SHOW_INSTANCE_NAME_DESCRIPTION =
+  "インスタンスの名前があれば表示する";
 export const INSTANCES_ADD_BUTTON_LABEL = "新しいインスタンスを追加する";
 export const INSTANCES_SHARE_BUTTON_LABEL = "シェア";

@@ -8,7 +8,14 @@ export const classify: Classifier<"mastodon"> = async (domain: string) => {
       await fetch(`https://${domain}/api/v1/instance`)
     ).json();
     if (response.version) {
-      return { status: true, instance: { type: "mastodon", url: domain } };
+      return {
+        status: true,
+        instance: {
+          type: "mastodon",
+          url: domain,
+          name: response?.title ?? null,
+        },
+      };
     }
   } catch {
     throw new Error(NETWORK_ERROR_MESSAGE);

@@ -3,10 +3,13 @@ import {
   CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION,
   CONFIG_DIALOG_TITLE,
   CONFIG_OPEN_QUICK_SHARE_DESCRIPTION,
+  CONFIG_SHOW_INSTANCE_NAME_DESCRIPTION,
   INSTANCES_CLEAR_DESCRIPTION,
+  INSTANCES_NAME_UPDATE_DESCRIPTION,
 } from "../messages";
 import { Dialog } from ".";
 import { Theme } from "../color";
+import { Instance, InstanceType, classify } from "../instance";
 
 const { a, div, button, input, label } = van.tags;
 
@@ -29,25 +32,81 @@ const ConfigFlagItem = (
   );
 
 export const ConfigDialog = (
+  instances: Instance[],
   clearInstance: () => void,
-  isAppendHashtag: State<boolean> | boolean,
-  setAppendHashtagFlag: (checked: boolean) => void,
-  isQuickShareMode: State<boolean> | boolean,
-  setQuickShareModeFlag: (checked: boolean) => void,
+  updateInstance: (instance: Instance) => void,
+  state: {
+    isAppendHashtag: State<boolean> | boolean;
+    setAppendHashtagFlag: (checked: boolean) => void;
+    isShownInstanceName: State<boolean> | boolean;
+    setShowInstanceNameFlag: (checked: boolean) => void;
+    isQuickShareMode: State<boolean> | boolean;
+    setQuickShareModeFlag: (checked: boolean) => void;
+  },
   theme: Theme,
 ) => {
+  const fetcherIsLoading = van.state(false);
+
   Dialog(
     CONFIG_DIALOG_TITLE,
     (close) => [
       ConfigFlagItem(
         CONFIG_OPEN_QUICK_SHARE_DESCRIPTION,
-        van.val(isQuickShareMode),
-        setQuickShareModeFlag,
+        van.val(state.isQuickShareMode),
+        state.setQuickShareModeFlag,
+      ),
+      ConfigFlagItem(
+        CONFIG_SHOW_INSTANCE_NAME_DESCRIPTION,
+        van.val(state.isShownInstanceName),
+        state.setShowInstanceNameFlag,
       ),
       ConfigFlagItem(
         CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION,
-        van.val(isAppendHashtag),
-        setAppendHashtagFlag,
+        van.val(state.isAppendHashtag),
+        state.setAppendHashtagFlag,
+      ),
+      div(
+        button(
+          {
+            disabled: fetcherIsLoading,
+            onclick: async () => {
+              try {
+                fetcherIsLoading.val = true;
+                (
+                  await Promise.all(
+                    instances.map(async (instance) => {
+                      try {
+                        const newInstance = (await classify(instance.url))
+                          .instance;
+                        if (newInstance.name != null) {
+                          return newInstance;
+                        }
+                      } catch (e) {
+                        console.error(e);
+                      }
+                      return null;
+                    }),
+                  )
+                )
+                  .filter(
+                    (instance): instance is Instance<InstanceType> =>
+                      instance != null,
+                  )
+                  .map((instance) => updateInstance(instance));
+              } catch (e) {
+                console.error(e);
+              } finally {
+                fetcherIsLoading.val = false;
+                close();
+              }
+            },
+            style: `
+              color: ${theme.text};
+              background: ${theme.componentBackground};
+              `,
+          },
+          INSTANCES_NAME_UPDATE_DESCRIPTION,
+        ),
       ),
       div(
         button(

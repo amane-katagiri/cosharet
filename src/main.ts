@@ -28,6 +28,7 @@ const addApp = (id: string) => {
   const instances = van.state(state?.instances?.sort(sortInstance) ?? []);
   const isAppendHashtag = van.state(state?.appendHashtag ?? false);
   const isQuickShareMode = van.state(state?.quickShareMode ?? false);
+  const isShownInstanceName = van.state(state?.showInstanceName ?? false);
 
   const selectedInstanceKey = van.state<string | null>(
     instances.val.length !== 0 ? getInstanceKey(instances.val[0]) : null,
@@ -52,11 +53,15 @@ const addApp = (id: string) => {
     ].sort(sortInstance);
     updateState({ instances: instances.val });
   };
-  const updateInstance = (instance: Instance, q: number = 1) => {
-    instances.val = [
-      { ...instance, q: (instance.q ?? 0) + q },
-      ...instances.val.filter((v) => v.url !== instance.url),
-    ].sort(sortInstance);
+  const updateInstance = (instance: Instance, qIncrement: number = 1) => {
+    const newInstance = { ...instance, q: (instance.q ?? 0) + qIncrement };
+    const oldInstances = [...instances.val];
+    oldInstances.forEach((instance, index, instances) => {
+      if (instance.url === newInstance.url) {
+        instances[index] = newInstance;
+      }
+    });
+    instances.val = oldInstances.sort(sortInstance);
     updateState({ instances: instances.val });
   };
   const removeInstance = (instance: Instance) => {
@@ -161,6 +166,7 @@ const addApp = (id: string) => {
                     : instances.val,
                   selectedInstanceKey: selectedInstanceKey.val,
                   isContentEmpty: content == null,
+                  isShownInstanceName: isShownInstanceName.val,
                   theme,
                   onClickItem: (instance: Instance) => {
                     selectedInstanceKey.val = getInstanceKey(instance);
@@ -195,16 +201,25 @@ const addApp = (id: string) => {
                   class: "imageButton",
                   onclick: () =>
                     ConfigDialog(
+                      instances.val,
                       clearInstance,
-                      isAppendHashtag,
-                      (checked) => {
-                        isAppendHashtag.val = checked;
-                        updateState({ appendHashtag: checked });
-                      },
-                      isQuickShareMode,
-                      (checked) => {
-                        isQuickShareMode.val = checked;
-                        updateState({ quickShareMode: checked });
+                      (instance: Instance) => updateInstance(instance, 0),
+                      {
+                        isAppendHashtag,
+                        setAppendHashtagFlag: (checked) => {
+                          isAppendHashtag.val = checked;
+                          updateState({ appendHashtag: checked });
+                        },
+                        isQuickShareMode,
+                        setQuickShareModeFlag: (checked) => {
+                          isQuickShareMode.val = checked;
+                          updateState({ quickShareMode: checked });
+                        },
+                        isShownInstanceName,
+                        setShowInstanceNameFlag: (checked) => {
+                          isShownInstanceName.val = checked;
+                          updateState({ showInstanceName: checked });
+                        },
                       },
                       theme,
                     ),

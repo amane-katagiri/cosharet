@@ -19,7 +19,14 @@ export const classify: Classifier<"misskey"> = async (domain: string) => {
       response = await (await fetch(`https://${domain}/api/meta`)).json();
     }
     if (response.version) {
-      return { status: true, instance: { type: "misskey", url: domain } };
+      return {
+        status: true,
+        instance: {
+          type: "misskey",
+          url: domain,
+          name: response?.name ?? null,
+        },
+      };
     }
   } catch {
     throw new Error(NETWORK_ERROR_MESSAGE);
