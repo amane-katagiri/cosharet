@@ -1,6 +1,7 @@
 import van, { State } from "vanjs-core";
 import {
   CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION,
+  CONFIG_BOOKMARKLET_DESCRIPTION,
   CONFIG_DIALOG_TITLE,
   CONFIG_OPEN_QUICK_SHARE_DESCRIPTION,
   CONFIG_SHOW_INSTANCE_NAME_DESCRIPTION,
@@ -121,6 +122,33 @@ export const ConfigDialog = (
               `,
           },
           INSTANCES_CLEAR_DESCRIPTION,
+        ),
+      ),
+      div(
+        {
+          style: `
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5em;
+            `,
+        },
+        CONFIG_BOOKMARKLET_DESCRIPTION,
+        a(
+          {
+            href: `javascript:(function(){window.open('${location.protocol}//${location.host}/#url='+encodeURI(location.href)+'&text='+encodeURI(document.title))})();`,
+            onclick: () => false,
+            style: `
+              padding: 0.25em 0.5em;
+              border-radius: 0.25em;
+              cursor: default;
+              display: inline-block;
+              text-decoration: none;
+              color: ${theme.accentColor};
+              background: ${theme.componentBackground};
+              `,
+          },
+          "cosharet",
         ),
       ),
       div(
