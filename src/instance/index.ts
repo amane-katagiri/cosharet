@@ -8,7 +8,7 @@ const INSTANCES = ["mastodon", "misskey"] as const;
 export type Instance<T extends string = string> = {
   type: T;
   url: string;
-  q?: number;
+  q?: number | null;
 };
 export const getInstanceKey = (instance: Instance) =>
   `${instance.type}-${instance.url}`;
@@ -23,7 +23,7 @@ export const InstanceSchema = schemaForType<Instance>()(
   z.object({
     type: z.string(),
     url: z.string(),
-    q: z.number().optional(),
+    q: z.number().nullish(),
   }),
 );
 export type InstanceType = (typeof INSTANCES)[number];

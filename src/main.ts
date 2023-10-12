@@ -44,9 +44,13 @@ const addApp = (id: string) => {
 
   const addInstance = (instance: Instance, q?: number) => {
     instances.val = [
-      { ...instance, q: q ?? Math.max(...instances.val.map((d) => d.q ?? 0)) },
+      {
+        ...instance,
+        q: q ?? Math.max(...[0], ...instances.val.map((d) => d.q ?? 0)),
+      },
       ...instances.val.filter((v) => v.url !== instance.url),
     ].sort(sortInstance);
+    console.log(instances.val);
     updateState({ instances: instances.val });
   };
   const updateInstance = (instance: Instance, q: number = 1) => {

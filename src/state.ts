@@ -47,7 +47,7 @@ export const restoreState = (): State | null => {
       : defaultInstances;
   const parsed = z.array(InstanceSchema).safeParse(instances);
   return {
-    instances: parsed.success ? parsed.data : null,
+    instances: parsed.success ? parsed.data : defaultInstances,
     appendHashtag: Boolean(
       jsonSafeParse(localStorage.getItem(APPEND_HASHTAG) ?? "false", false),
     ),
