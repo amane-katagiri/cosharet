@@ -23,6 +23,26 @@ Install link [https://cosharet.pages.dev/#text=text you want to share 😎&url=h
 - `text`: Text you want to share 😎 (must be encoded: `text%20you%20want%20tp%20share%20%F0%9F%98%8E`)
 - `url`: Url you want to share with (must be encoded: `https%3A%2F%2Fexample.com%2F`)
 - `hashtags`: Hashtags you want share (must be split with comma: `hashtag,with,comma,separation`)
+- `theme`: Name of page theme (with light/dark mode)
+  - `default`
+
+You can modify `theme` colors, in hex style (`#RGB`, `#RGBA`, `#RRGGBB`, `#RRGGBBAA`) or color name (`aliceblue` ...).
+
+#### light theme
+
+- `gflc`: foreground color (for text)
+- `gblc`: background color
+- `cblc`: component background color
+- `sblc`: selected instance background color
+- `galc`: accent color (for link text and share button)
+
+#### dark theme
+
+- `gfdc`: foreground color (for text)
+- `gbdc`: background color
+- `cbdc`: component background color
+- `sbdc`: selected instance background color
+- `gadc`: accent color (for link text and share button)
 
 You can also pass parameters via query(`?...`).
 
@@ -48,7 +68,7 @@ pnpm run build
 - Preview text to share before posting.
 - Save your instance list on your compuer.
 - Show frequently used instances on top.
-- (Set the color theme from the link parameter.)
+- Set the color theme from the link parameter.
 - (One click mode: share via the most frequently used instance.)
 
 ## Reference
