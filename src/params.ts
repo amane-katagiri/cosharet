@@ -34,8 +34,8 @@ const buildParams = (params: {
     (params.content.url ?? "") == ""
       ? null
       : [
-          params.content.url,
           params.content.text,
+          params.content.url,
           params.content.hashtags
             ?.split(",")
             .filter((h) => !h.match(/[ #]/))
