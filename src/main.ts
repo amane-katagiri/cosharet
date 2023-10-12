@@ -20,6 +20,7 @@ import { ConfigDialog } from "./dialog/config-dialog.js";
 import emoji_2699 from "./emoji/2699.svg";
 import { QuickDialog } from "./dialog/quick-dialog.js";
 import { ShareContent } from "./share-content.js";
+import { autoFocus } from "./dialog/index.js";
 
 const { div, button, img, a } = van.tags;
 
@@ -96,14 +97,15 @@ const addApp = (id: string) => {
     location.href = href;
   };
 
-  isQuickShareMode.val && instances.val.length !== 0 && content != null
-    ? QuickDialog(
-        () => share(instances.val[0]),
-        content,
-        instances.val[0],
-        theme,
-      )
-    : "";
+  if (isQuickShareMode.val && instances.val.length !== 0 && content != null) {
+    QuickDialog(
+      () => share(instances.val[0]),
+      content,
+      instances.val[0],
+      theme,
+    );
+    autoFocus();
+  }
 
   const target = document.querySelector(`#${id}`);
   if (target != null) {
@@ -192,6 +194,7 @@ const addApp = (id: string) => {
                     `,
                   onclick: () => {
                     FetchDialog(addInstance, theme);
+                    autoFocus();
                   },
                 },
                 INSTANCES_ADD_BUTTON_LABEL,
@@ -199,7 +202,7 @@ const addApp = (id: string) => {
               button(
                 {
                   class: "imageButton",
-                  onclick: () =>
+                  onclick: () => {
                     ConfigDialog(
                       instances.val,
                       clearInstance,
@@ -222,7 +225,9 @@ const addApp = (id: string) => {
                         },
                       },
                       theme,
-                    ),
+                    );
+                    autoFocus();
+                  },
                 },
                 img({ src: emoji_2699, style: "height: 1em;" }),
               ),

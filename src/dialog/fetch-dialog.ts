@@ -5,7 +5,7 @@ import {
   INSTANCES_ADD_DESCRIPTION,
   LOADING_INSTANCE_MESSAGE,
 } from "../messages";
-import { Dialog } from ".";
+import { Dialog, MODAL_DIALOG_AUTOFOCUS_CLASS_NAME } from ".";
 import { Theme } from "../color";
 
 const { div, button, input } = van.tags;
@@ -65,6 +65,7 @@ export const FetchDialog = (
           },
           type: "text",
           disabled: fetcherIsLoading,
+          class: MODAL_DIALOG_AUTOFOCUS_CLASS_NAME,
           style: `
             flex-grow: 1;
             color: ${theme.text};
