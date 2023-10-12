@@ -12,17 +12,19 @@ This is a tiny hub for sharing posts in the Fediverse (currently Masotodon and M
 
 *COOL IMAGE*
 
-1. Open the [link](https://cosharet.pages.dev/share?text=Share%20from%20cosharet%20%F0%9F%98%8E&url=https://github.com/amane-katagiri/cosharet&hashtags=cosharet,test) on your favorite site.
+1. Open the [link](https://cosharet.pages.dev/#text=Share%20from%20cosharet%20%F0%9F%98%8E&url=https://github.com/amane-katagiri/cosharet&hashtags=cosharet,test) on your favorite site.
 1. Select or add a fediverse instance you want to share from.
 1. Click share button to open share page on your instance.
 
 ### Create share link
 
-Install link [https://cosharet.pages.dev/share?text=text you want to share 😎&url=https://example.com/&hashtags=hashtag,with,comma,separation](https://cosharet.pages.dev/share?text=text%20you%20want%20to%20share%20%F0%9F%98%8E&url=https%3A%2F%2Fexample.com%2F&hashtags=hashtag,with,comma,separation) to your site.
+Install link [https://cosharet.pages.dev/#text=text you want to share 😎&url=https://example.com/&hashtags=hashtag,with,comma,separation](https://cosharet.pages.dev/#text=text%20you%20want%20to%20share%20%F0%9F%98%8E&url=https%3A%2F%2Fexample.com%2F&hashtags=hashtag,with,comma,separation) to your site.
 
 - `text`: Text you want to share 😎 (must be encoded: `text%20you%20want%20tp%20share%20%F0%9F%98%8E`)
 - `url`: Url you want to share with (must be encoded: `https%3A%2F%2Fexample.com%2F`)
 - `hashtags`: Hashtags you want share (must be split with comma: `hashtag,with,comma,separation`)
+
+You can also pass parameters via query(`?...`).
 
 ### Run cosharet on local
 
@@ -41,6 +43,13 @@ pnpm run build
 ```
 
 ## Feature
+
+- Share links to the Fediverse.
+- Preview text to share before posting.
+- Save your instance list on your compuer.
+- Show frequently used instances on top.
+- (Set the color theme from the link parameter.)
+- (One click mode: share via the most frequently used instance.)
 
 ## Reference
 
