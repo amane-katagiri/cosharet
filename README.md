@@ -69,7 +69,7 @@ pnpm run build
 - Save your instance list on your compuer.
 - Show frequently used instances on top.
 - Set the color theme from the link parameter.
-- (One click mode: share via the most frequently used instance.)
+- One click mode: share via the most frequently used instance.
 
 ## Reference
 

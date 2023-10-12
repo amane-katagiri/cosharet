@@ -69,7 +69,11 @@ export const InstanceList = (params: {
                         },
                         class: "imageButton",
                       },
-                      img({ style: "height: 1em;", src: emoji_274c }),
+                      img({
+                        width: "16",
+                        style: "height: 1em;",
+                        src: emoji_274c,
+                      }),
                     )
                   : "",
                 div(

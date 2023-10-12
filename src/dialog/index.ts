@@ -5,58 +5,63 @@ import emoji_274c from "../emoji/274c.svg";
 
 const { div, button, img } = van.tags;
 
-export const Dialog = (
+const DialogComponent = (
   title: string,
   children: (close: () => void) => ChildDom[],
   theme: Theme,
 ) => {
   const closed = van.state(false);
 
-  van.add(
-    document.body,
-    Modal(
+  return Modal(
+    {
+      closed,
+      modalStyleOverrides: { background: theme.background },
+      blurBackground: true,
+    },
+    div(
       {
-        closed,
-        modalStyleOverrides: { background: theme.background },
-        blurBackground: true,
+        style: `
+          color: ${theme.text};
+          `,
       },
       div(
         {
           style: `
-            color: ${theme.text};
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1em;
             `,
         },
-        div(
+        title,
+        button(
           {
-            style: `
-              display: flex;
-              justify-content: space-between;
-              margin-bottom: 1em;
-              `,
+            class: "imageButton",
+            onclick: () => (closed.val = true),
           },
-          title,
-          button(
-            {
-              class: "imageButton",
-              onclick: () => (closed.val = true),
-            },
-            img({ style: "height: 1em;", src: emoji_274c }),
-          ),
+          img({ style: "height: 1em;", src: emoji_274c }),
         ),
-        div(
-          {
-            class: "modalDialog",
-            style: `
-              display: flex;
-              flex-direction: column;
-              gap: 1em;
-              max-width: calc(100dvw - 2rem - 2rem);
-              font-size: small;
-              `,
-          },
-          children(() => (closed.val = true)),
-        ),
+      ),
+      div(
+        {
+          class: "modalDialog",
+          style: `
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            max-width: calc(100dvw - 2rem - 2rem);
+            font-size: small;
+            `,
+        },
+        children(() => (closed.val = true)),
       ),
     ),
   );
+};
+
+export const Dialog = (
+  title: string,
+  children: (close: () => void) => ChildDom[],
+  theme: Theme,
+) => {
+  van.add(document.body, DialogComponent(title, children, theme));
 };

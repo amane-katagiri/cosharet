@@ -1,3 +1,5 @@
+import { Instance } from "./instance";
+
 export const NETWORK_ERROR_MESSAGE = "このインスタンスにはアクセスできません。";
 export const UNKNOWN_INSTANCE_MESSAGE =
   "このインスタンスには対応していません。";
@@ -9,7 +11,10 @@ export const INSTANCES_ADD_DESCRIPTION =
   "シェアしたいインスタンスのドメインを入力してください。";
 export const SHARE_CONTENT_DESCRIPTION =
   "お好きなSNSで以下の内容をシェアできます。";
+export const QUICK_SHARE_DESCRIPTION = (instance: Instance) =>
+  `${instance.url}で以下の内容をシェアします。`;
 export const CONFIG_DIALOG_TITLE = "設定";
+export const QUICK_DIALOG_TITLE = import.meta.env.VITE_APP_TITLE;
 export const INSTANCES_CLEAR_DESCRIPTION = "リストをリセットする";
 export const CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION = `ハッシュタグに #${
   import.meta.env.VITE_APP_HASHTAG

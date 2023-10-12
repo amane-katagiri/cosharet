@@ -11,26 +11,27 @@ import van from "vanjs-core";
 import {
   INSTANCES_ADD_BUTTON_LABEL,
   NO_SHARE_CONTENT_ERROR_MESSAGE,
-  SHARE_CONTENT_DESCRIPTION,
 } from "./messages.js";
 import { FetchDialog } from "./dialog/fetch-dialog.js";
 import { InstanceList } from "./instance-list.js";
 import { defaultInstances } from "./config/instances.js";
 import { ConfigDialog } from "./dialog/config-dialog.js";
-import emoji_1f4cb from "./emoji/1f4cb.svg";
 import emoji_2699 from "./emoji/2699.svg";
+import { QuickDialog } from "./dialog/quick-dialog.js";
+import { ShareContent } from "./share-content.js";
 
-const { div, button, img, span } = van.tags;
+const { div, button, img } = van.tags;
 
 const addApp = (id: string) => {
-  const instances = van.state(
-    restoreState()?.instances?.sort(sortInstance) ?? [],
-  );
+  const state = restoreState();
+  const instances = van.state(state?.instances?.sort(sortInstance) ?? []);
+  const isAppendHashtag = van.state(state?.appendHashtag ?? false);
+  const isQuickShareMode = van.state(state?.quickShareMode ?? false);
+
   const selectedInstanceKey = van.state<string | null>(
     instances.val.length !== 0 ? getInstanceKey(instances.val[0]) : null,
   );
   const isNavigating = van.state(false);
-  const isAppendHashtag = van.state(restoreState()?.appendHashtag ?? false);
 
   const { content, theme } = parseUrlParams(
     new URLSearchParams(
@@ -66,6 +67,34 @@ const addApp = (id: string) => {
     instances.val = [...defaultInstances];
     clearState(["instances"]);
   };
+  const share = (instance: Instance) => {
+    const href = generate(
+      instance,
+      content == null
+        ? ""
+        : `${content}${
+            isAppendHashtag.val &&
+            !content.includes(`#${import.meta.env.VITE_APP_HASHTAG}`)
+              ? `#${import.meta.env.VITE_APP_HASHTAG} `
+              : ""
+          }`,
+    );
+    if (href == null) {
+      return;
+    }
+    isNavigating.val = true;
+    updateInstance(instance);
+    location.href = href;
+  };
+
+  isQuickShareMode.val && instances.val.length !== 0 && content != null
+    ? QuickDialog(
+        () => share(instances.val[0]),
+        content,
+        instances.val[0],
+        theme,
+      )
+    : "";
 
   const target = document.querySelector(`#${id}`);
   if (target != null) {
@@ -101,48 +130,7 @@ const addApp = (id: string) => {
                 `,
             },
             content != null
-              ? div(
-                  {
-                    style: `
-                      display: flex;
-                      flex-direction: column;
-                      gap: 0.5em;
-                      `,
-                  },
-                  div(SHARE_CONTENT_DESCRIPTION),
-                  div(
-                    {
-                      style: `
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        color: ${theme.text};
-                        background: ${theme.componentBackground};
-                        border-radius: 0.5em;
-                        padding: 1em;
-                        `,
-                    },
-                    img({
-                      src: emoji_1f4cb,
-                      style: `
-                        height: 1em;
-                        margin-right: 0.5em
-                        `,
-                    }),
-                    span(
-                      {
-                        style: `
-                          -moz-user-select: all;
-                          -webkit-user-select: text;
-                          -webkit-user-select: all;
-                          -ms-user-select: all;
-                          user-select: all;
-                          `,
-                      },
-                      content,
-                    ),
-                  ),
-                )
+              ? ShareContent(content, null, theme)
               : div(NO_SHARE_CONTENT_ERROR_MESSAGE),
             () =>
               div(
@@ -162,24 +150,7 @@ const addApp = (id: string) => {
                   onClickItem: (instance: Instance) => {
                     selectedInstanceKey.val = getInstanceKey(instance);
                   },
-                  onClickShare: (instance: Instance) => {
-                    const href = generate(
-                      instance,
-                      content == null
-                        ? ""
-                        : `${content}${
-                            isAppendHashtag.val
-                              ? `#${import.meta.env.VITE_APP_HASHTAG} `
-                              : ""
-                          }`,
-                    );
-                    if (href == null) {
-                      return;
-                    }
-                    isNavigating.val = true;
-                    updateInstance(instance);
-                    location.href = href;
-                  },
+                  onClickShare: share,
                   onClickRemove: removeInstance,
                 }),
               ),
@@ -214,6 +185,11 @@ const addApp = (id: string) => {
                       (checked) => {
                         isAppendHashtag.val = checked;
                         updateState({ appendHashtag: checked });
+                      },
+                      isQuickShareMode,
+                      (checked) => {
+                        isQuickShareMode.val = checked;
+                        updateState({ quickShareMode: checked });
                       },
                       theme,
                     ),

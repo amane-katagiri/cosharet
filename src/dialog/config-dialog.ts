@@ -32,12 +32,18 @@ export const ConfigDialog = (
   clearInstance: () => void,
   isAppendHashtag: State<boolean> | boolean,
   setAppendHashtagFlag: (checked: boolean) => void,
+  isQuickShareMode: State<boolean> | boolean,
+  setQuickShareModeFlag: (checked: boolean) => void,
   theme: Theme,
 ) => {
   Dialog(
     CONFIG_DIALOG_TITLE,
     (close) => [
-      ConfigFlagItem(CONFIG_OPEN_QUICK_SHARE_DESCRIPTION, false),
+      ConfigFlagItem(
+        CONFIG_OPEN_QUICK_SHARE_DESCRIPTION,
+        van.val(isQuickShareMode),
+        setQuickShareModeFlag,
+      ),
       ConfigFlagItem(
         CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION,
         van.val(isAppendHashtag),
