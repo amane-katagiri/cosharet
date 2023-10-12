@@ -1,6 +1,7 @@
 export const NETWORK_ERROR_MESSAGE = "このインスタンスにはアクセスできません。";
 export const UNKNOWN_INSTANCE_MESSAGE =
   "このインスタンスには対応していません。";
+export const LOADING_INSTANCE_MESSAGE = "インスタンス情報を取得しています...";
 export const NO_SHARE_CONTENT_ERROR_MESSAGE =
   "シェアできるコンテンツはありません。";
 export const NO_INSTANCE_ERROR_MESSAGE = "利用できるインスタンスはありません。";

@@ -30,3 +30,8 @@ button.imageButton {
   padding: 0;
   font-size: 1em;
 }
+button:not(:enabled),
+input:not(:enabled),
+.disabled {
+  filter: brightness(0.5);
+}

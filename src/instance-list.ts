@@ -5,8 +5,9 @@ import {
   NO_INSTANCE_ERROR_MESSAGE,
 } from "./messages";
 import { Theme } from "./color";
+import emoji_274c from "./emoji/274c.svg";
 
-const { div, button } = van.tags;
+const { div, button, img } = van.tags;
 
 const itemStyle = `
   display: flex;
@@ -44,6 +45,7 @@ export const InstanceList = (params: {
           {
             style: () => `
               ${itemStyle}
+              user-select: none;
               ${selected ? `background: ${theme.selectedItemBackground}` : ""};
               `,
             onclick: () => onClickItem(instance),
@@ -67,7 +69,7 @@ export const InstanceList = (params: {
                         },
                         class: "imageButton",
                       },
-                      "❌",
+                      img({ style: "height: 1em;", src: emoji_274c }),
                     )
                   : "",
                 div(

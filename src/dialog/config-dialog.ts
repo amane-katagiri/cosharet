@@ -11,7 +11,13 @@ import { Theme } from "../color";
 const { a, div, button, input, label } = van.tags;
 
 const ConfigFlagItem = (description: string) =>
-  div(label(input({ type: "checkbox", disabled: true }), description));
+  div(
+    label(
+      { class: "disabled" },
+      input({ type: "checkbox", disabled: true }),
+      description,
+    ),
+  );
 
 export const ConfigDialog = (clearInstance: () => void, theme: Theme) => {
   Dialog(
@@ -35,19 +41,45 @@ export const ConfigDialog = (clearInstance: () => void, theme: Theme) => {
         ),
       ),
       div(
-        { style: `font-size: small;` },
         a(
           {
             href: import.meta.env.VITE_APP_SOURCE_LINK,
             target: "_blank",
             rel: "noopener noreferrer",
             style: `
-                  color: ${theme.accentColor}
-                  `,
+              color: ${theme.accentColor}
+              `,
           },
           import.meta.env.VITE_APP_TITLE,
         ),
         " is a tiny hub for sharing posts in the Fediverse. ",
+      ),
+      div(
+        "Emoji graphics are licensed under a ",
+        a(
+          {
+            href: "https://creativecommons.org/licenses/by/4.0/",
+            target: "_blank",
+            rel: "noopener noreferrer",
+            style: `
+              color: ${theme.accentColor}
+              `,
+          },
+          "CC BY 4.0",
+        ),
+        " by ",
+        a(
+          {
+            href: "https://twemoji.twitter.com/",
+            target: "_blank",
+            rel: "noopener noreferrer",
+            style: `
+              color: ${theme.accentColor}
+              `,
+          },
+          "Twitter, Inc and other contributors",
+        ),
+        ".",
       ),
     ],
     theme,

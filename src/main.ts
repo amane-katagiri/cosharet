@@ -17,8 +17,10 @@ import { FetchDialog } from "./dialog/fetch-dialog.js";
 import { InstanceList } from "./instance-list.js";
 import { defaultInstances } from "./config/instances.js";
 import { ConfigDialog } from "./dialog/config-dialog.js";
+import emoji_1f4cb from "./emoji/1f4cb.svg";
+import emoji_2699 from "./emoji/2699.svg";
 
-const { div, button } = van.tags;
+const { div, button, img, span } = van.tags;
 
 const addApp = (id: string) => {
   const instances = van.state(
@@ -117,14 +119,27 @@ const addApp = (id: string) => {
                         background: ${theme.componentBackground};
                         border-radius: 0.5em;
                         padding: 1em;
-                        -moz-user-select: all;
-                        -webkit-user-select: text;
-                        -webkit-user-select: all;
-                        -ms-user-select: all;
-                        user-select: all;
                         `,
                     },
-                    `📋 ${content}`,
+                    img({
+                      src: emoji_1f4cb,
+                      style: `
+                        height: 1em;
+                        margin-right: 0.5em
+                        `,
+                    }),
+                    span(
+                      {
+                        style: `
+                          -moz-user-select: all;
+                          -webkit-user-select: text;
+                          -webkit-user-select: all;
+                          -ms-user-select: all;
+                          user-select: all;
+                          `,
+                      },
+                      content,
+                    ),
                   ),
                 )
               : div(NO_SHARE_CONTENT_ERROR_MESSAGE),
@@ -184,7 +199,7 @@ const addApp = (id: string) => {
                   class: "imageButton",
                   onclick: () => ConfigDialog(clearInstance, theme),
                 },
-                "⚙️",
+                img({ src: emoji_2699, style: "height: 1em;" }),
               ),
             ),
           ),

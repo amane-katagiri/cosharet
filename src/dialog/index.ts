@@ -1,8 +1,9 @@
 import van, { ChildDom } from "vanjs-core";
 import { Modal } from "vanjs-ui";
 import { Theme } from "../color";
+import emoji_274c from "../emoji/274c.svg";
 
-const { div, button } = van.tags;
+const { div, button, img } = van.tags;
 
 export const Dialog = (
   title: string,
@@ -39,7 +40,7 @@ export const Dialog = (
               class: "imageButton",
               onclick: () => (closed.val = true),
             },
-            "❌",
+            img({ style: "height: 1em;", src: emoji_274c }),
           ),
         ),
         div(

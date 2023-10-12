@@ -3,6 +3,7 @@ import { Instance, classify } from "../instance";
 import {
   INSTANCES_ADD_BUTTON_LABEL,
   INSTANCES_ADD_DESCRIPTION,
+  LOADING_INSTANCE_MESSAGE,
 } from "../messages";
 import { Dialog } from ".";
 import { Theme } from "../color";
@@ -15,6 +16,7 @@ export const FetchDialog = (
 ) => {
   const fetcherIsLoading = van.state(false);
   const fetcherError = van.state<string | null>(null);
+  const fetcherInfo = van.state<string | null>(null);
   const fetcherInput = van.state("");
 
   Dialog(
@@ -25,7 +27,7 @@ export const FetchDialog = (
           {
             style: `${fetcherError.val != null ? `color: red` : ``};`,
           },
-          fetcherError.val ?? INSTANCES_ADD_DESCRIPTION,
+          fetcherError.val ?? fetcherInfo.val ?? INSTANCES_ADD_DESCRIPTION,
         ),
       div(
         {
@@ -54,6 +56,7 @@ export const FetchDialog = (
             onclick: async () => {
               try {
                 fetcherIsLoading.val = true;
+                fetcherInfo.val = LOADING_INSTANCE_MESSAGE;
                 addInstance((await classify(fetcherInput.val)).instance);
                 close();
               } catch (e) {
@@ -61,6 +64,7 @@ export const FetchDialog = (
                   e instanceof AggregateError ? e.errors[0] : e,
                 );
               } finally {
+                fetcherInfo.val = null;
                 fetcherIsLoading.val = false;
               }
             },
