@@ -11,8 +11,9 @@ export const SHARE_CONTENT_DESCRIPTION =
   "お好きなSNSで以下の内容をシェアできます。";
 export const CONFIG_DIALOG_TITLE = "設定";
 export const INSTANCES_CLEAR_DESCRIPTION = "リストをリセットする";
-export const CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION =
-  "ハッシュタグに #cosharet を追加してシェアする";
+export const CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION = `ハッシュタグに #${
+  import.meta.env.VITE_APP_HASHTAG
+} を追加してシェアする`;
 export const CONFIG_OPEN_QUICK_SHARE_DESCRIPTION =
   "常にワンクリックでシェアする";
 export const INSTANCES_ADD_BUTTON_LABEL = "新しいインスタンスを追加する";

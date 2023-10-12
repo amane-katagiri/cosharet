@@ -30,6 +30,7 @@ const addApp = (id: string) => {
     instances.val.length !== 0 ? getInstanceKey(instances.val[0]) : null,
   );
   const isNavigating = van.state(false);
+  const isAppendHashtag = van.state(restoreState()?.appendHashtag ?? false);
 
   const { content, theme } = parseUrlParams(
     new URLSearchParams(
@@ -162,7 +163,16 @@ const addApp = (id: string) => {
                     selectedInstanceKey.val = getInstanceKey(instance);
                   },
                   onClickShare: (instance: Instance) => {
-                    const href = generate(instance, content ?? "");
+                    const href = generate(
+                      instance,
+                      content == null
+                        ? ""
+                        : `${content}${
+                            isAppendHashtag.val
+                              ? `#${import.meta.env.VITE_APP_HASHTAG} `
+                              : ""
+                          }`,
+                    );
                     if (href == null) {
                       return;
                     }
@@ -197,7 +207,16 @@ const addApp = (id: string) => {
               button(
                 {
                   class: "imageButton",
-                  onclick: () => ConfigDialog(clearInstance, theme),
+                  onclick: () =>
+                    ConfigDialog(
+                      clearInstance,
+                      isAppendHashtag,
+                      (checked) => {
+                        isAppendHashtag.val = checked;
+                        updateState({ appendHashtag: checked });
+                      },
+                      theme,
+                    ),
                 },
                 img({ src: emoji_2699, style: "height: 1em;" }),
               ),

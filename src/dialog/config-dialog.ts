@@ -1,4 +1,4 @@
-import van from "vanjs-core";
+import van, { State } from "vanjs-core";
 import {
   CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION,
   CONFIG_DIALOG_TITLE,
@@ -10,21 +10,39 @@ import { Theme } from "../color";
 
 const { a, div, button, input, label } = van.tags;
 
-const ConfigFlagItem = (description: string) =>
+const ConfigFlagItem = (
+  description: string,
+  value: boolean,
+  onchange?: (checked: boolean) => void,
+) =>
   div(
     label(
-      { class: "disabled" },
-      input({ type: "checkbox", disabled: true }),
+      { class: onchange == null ? "disabled" : "" },
+      input({
+        type: "checkbox",
+        onchange: (e) => onchange?.(e.target.checked),
+        checked: value,
+        disabled: onchange == null,
+      }),
       description,
     ),
   );
 
-export const ConfigDialog = (clearInstance: () => void, theme: Theme) => {
+export const ConfigDialog = (
+  clearInstance: () => void,
+  isAppendHashtag: State<boolean> | boolean,
+  setAppendHashtagFlag: (checked: boolean) => void,
+  theme: Theme,
+) => {
   Dialog(
     CONFIG_DIALOG_TITLE,
     (close) => [
-      ConfigFlagItem(CONFIG_OPEN_QUICK_SHARE_DESCRIPTION),
-      ConfigFlagItem(CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION),
+      ConfigFlagItem(CONFIG_OPEN_QUICK_SHARE_DESCRIPTION, false),
+      ConfigFlagItem(
+        CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION,
+        van.val(isAppendHashtag),
+        setAppendHashtagFlag,
+      ),
       div(
         button(
           {
