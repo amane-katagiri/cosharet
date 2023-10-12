@@ -7,6 +7,7 @@ export const LOADING_INSTANCE_MESSAGE = "インスタンス情報を取得して
 export const NO_SHARE_CONTENT_ERROR_MESSAGE =
   "シェアできるコンテンツはありません。";
 export const NO_INSTANCE_ERROR_MESSAGE = "利用できるインスタンスはありません。";
+export const OPEN_SAMPLE_LINK_MESSAGE = "サンプルを開く";
 export const INSTANCES_ADD_DESCRIPTION =
   "シェアしたいインスタンスのドメインを入力してください。";
 export const SHARE_CONTENT_DESCRIPTION =

@@ -11,6 +11,7 @@ import van from "vanjs-core";
 import {
   INSTANCES_ADD_BUTTON_LABEL,
   NO_SHARE_CONTENT_ERROR_MESSAGE,
+  OPEN_SAMPLE_LINK_MESSAGE,
 } from "./messages.js";
 import { FetchDialog } from "./dialog/fetch-dialog.js";
 import { InstanceList } from "./instance-list.js";
@@ -20,7 +21,7 @@ import emoji_2699 from "./emoji/2699.svg";
 import { QuickDialog } from "./dialog/quick-dialog.js";
 import { ShareContent } from "./share-content.js";
 
-const { div, button, img } = van.tags;
+const { div, button, img, a } = van.tags;
 
 const addApp = (id: string) => {
   const state = restoreState();
@@ -131,7 +132,18 @@ const addApp = (id: string) => {
             },
             content != null
               ? ShareContent(content, null, theme)
-              : div(NO_SHARE_CONTENT_ERROR_MESSAGE),
+              : div(
+                  NO_SHARE_CONTENT_ERROR_MESSAGE,
+                  a(
+                    {
+                      href: "?#text=Share from cosharet 😎&url=https://github.com/amane-katagiri/cosharet&hashtags=cosharet,test",
+                      style: `
+                        color: ${theme.accentColor}
+                        `,
+                    },
+                    OPEN_SAMPLE_LINK_MESSAGE,
+                  ),
+                ),
             () =>
               div(
                 {
