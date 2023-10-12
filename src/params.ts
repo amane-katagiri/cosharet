@@ -30,21 +30,18 @@ const buildParams = (params: {
           defaultThemes["default"]
         ).light,
       );
-  const content =
-    (params.content.url ?? "") == ""
-      ? null
-      : [
-          params.content.text,
-          params.content.url,
-          params.content.hashtags
-            ?.split(",")
-            .filter((h) => !h.match(/[ #]/))
-            .map((h) => `#${h}`)
-            ?.join(" "),
-          "",
-        ]
-          .filter((item) => item != null)
-          .join(" ");
+  const content = [
+    params.content.text,
+    params.content.url,
+    params.content.hashtags
+      ?.split(",")
+      .filter((h) => !h.match(/[ #]/))
+      .map((h) => `#${h}`)
+      ?.join(" "),
+    "",
+  ]
+    .filter((item) => item != null)
+    .join(" ");
   return {
     content: (content?.length ?? 0) !== 0 ? content : null,
     theme,
