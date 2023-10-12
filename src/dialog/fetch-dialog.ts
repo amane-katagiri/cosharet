@@ -16,11 +16,10 @@ export const FetchDialog = (
   const fetcherIsLoading = van.state(false);
   const fetcherError = van.state<string | null>(null);
   const fetcherInput = van.state("");
-  const closed = van.state(false);
 
   Dialog(
     INSTANCES_ADD_BUTTON_LABEL,
-    [
+    (close) => [
       () =>
         div(
           {
@@ -56,7 +55,7 @@ export const FetchDialog = (
               try {
                 fetcherIsLoading.val = true;
                 addInstance((await classify(fetcherInput.val)).instance);
-                closed.val = true;
+                close();
               } catch (e) {
                 fetcherError.val = String(
                   e instanceof AggregateError ? e.errors[0] : e,

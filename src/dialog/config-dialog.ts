@@ -16,13 +16,16 @@ const ConfigFlagItem = (description: string) =>
 export const ConfigDialog = (clearInstance: () => void, theme: Theme) => {
   Dialog(
     CONFIG_DIALOG_TITLE,
-    [
+    (close) => [
       ConfigFlagItem(CONFIG_OPEN_QUICK_SHARE_DESCRIPTION),
       ConfigFlagItem(CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION),
       div(
         button(
           {
-            onclick: clearInstance,
+            onclick: () => {
+              clearInstance();
+              close();
+            },
             style: `
               color: ${theme.text};
               background: ${theme.componentBackground};

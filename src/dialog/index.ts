@@ -4,7 +4,11 @@ import { Theme } from "../color";
 
 const { div, button } = van.tags;
 
-export const Dialog = (title: string, children: ChildDom[], theme: Theme) => {
+export const Dialog = (
+  title: string,
+  children: (close: () => void) => ChildDom[],
+  theme: Theme,
+) => {
   const closed = van.state(false);
 
   van.add(
@@ -49,7 +53,7 @@ export const Dialog = (title: string, children: ChildDom[], theme: Theme) => {
               font-size: small;
               `,
           },
-          children,
+          children(() => (closed.val = true)),
         ),
       ),
     ),
