@@ -4,7 +4,20 @@ import { NETWORK_ERROR_MESSAGE, UNKNOWN_INSTANCE_MESSAGE } from "../messages";
 /** @package */
 export const classify: Classifier<"misskey"> = async (domain: string) => {
   try {
-    const response = await (await fetch(`https://${domain}/api/meta`)).json();
+    let response = null;
+    try {
+      response = await (
+        await fetch(`https://${domain}/api/meta`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ detail: false }),
+        })
+      ).json();
+    } catch {
+      response = await (await fetch(`https://${domain}/api/meta`)).json();
+    }
     if (response.version) {
       return { status: true, instance: { type: "misskey", url: domain } };
     }
