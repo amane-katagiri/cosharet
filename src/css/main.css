@@ -19,7 +19,8 @@ textarea:focus {
 }
 button {
   border-radius: 0.5em;
-  padding: 0.25em 0.5em;
+  padding: 0.5em;
+  line-height: 1em;
   border: none;
 }
 button:enabled {
