@@ -12,7 +12,7 @@ export const LinkBuilder = (theme: Theme) =>
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0.5em;
+        gap: 1em;
         `,
     },
     LINK_BUILDER_DESCRIPTION,
@@ -21,8 +21,8 @@ export const LinkBuilder = (theme: Theme) =>
         style: `
           display: flex;
           flex-direction: column;
-          gap: 0.5em;
-          width: 75%;
+          gap: 1em;
+          width: 100%;
           `,
         target: "_blank",
       },
@@ -50,14 +50,14 @@ export const LinkBuilder = (theme: Theme) =>
                display: flex;
                gap: 0.5em;
                justify-content: space-between;
+               align-items: center;
                flex-wrap: wrap;
                `,
           },
           div(
             {
               style: `
-                 width: 25%;
-                 min-width: 96px;
+                 width: 96px;
                  text-align: initial;
                  `,
             },
@@ -69,7 +69,10 @@ export const LinkBuilder = (theme: Theme) =>
                 placeholder: param.example,
                 style: `
                   flex-grow: 1;
+                  color: ${theme.text};
+                  background: ${theme.componentBackground};
                   `,
+                type: "text",
                 required: param.required,
               })
             : select(
@@ -77,6 +80,8 @@ export const LinkBuilder = (theme: Theme) =>
                   name: param.name,
                   style: `
                     flex-grow: 1;
+                    color: ${theme.text};
+                    background: ${theme.componentBackground};
                     `,
                   required: param.required,
                 },
