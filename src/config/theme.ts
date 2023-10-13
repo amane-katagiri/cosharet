@@ -21,12 +21,19 @@ export const defaultTheme: { light: Theme; dark: Theme } = {
   },
 };
 
+export const namedThemeKeys = [
+  "default",
+  "bluebird",
+  "greenballoon",
+  "redtriangle",
+];
 export const namedThemes: {
-  [k: string]: {
+  [k in (typeof namedThemeKeys)[number]]: {
     light?: Partial<Theme>;
     dark?: Partial<Theme>;
   };
 } = {
+  default: defaultTheme,
   bluebird: {
     light: {
       selectedItemBackground: "lightgray",

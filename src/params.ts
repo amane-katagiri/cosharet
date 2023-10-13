@@ -42,14 +42,18 @@ const buildParams = (params: {
 };
 
 export const parseUrlParams = (urlParams: URLSearchParams): Params => {
+  const text = urlParams.get("text");
+  const url = urlParams.get("url");
+  const hashtags = urlParams.get("hashtags");
+  const theme = urlParams.get("theme");
   return buildParams({
     content: {
-      text: urlParams.get("text"),
-      url: urlParams.get("url"),
-      hashtags: urlParams.get("hashtags"),
+      text: text !== "" ? text : null,
+      url: url !== "" ? url : null,
+      hashtags: hashtags !== "" ? hashtags : null,
     },
     theme: {
-      key: urlParams.get("theme"),
+      key: theme !== "" ? theme : null,
       light: {
         text: urlParams.get("gflc") ?? undefined,
         background: urlParams.get("gblc") ?? undefined,

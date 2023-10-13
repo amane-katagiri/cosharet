@@ -4,10 +4,10 @@ export const NETWORK_ERROR_MESSAGE = "このインスタンスにはアクセス
 export const UNKNOWN_INSTANCE_MESSAGE =
   "このインスタンスには対応していません。";
 export const LOADING_INSTANCE_MESSAGE = "インスタンス情報を取得しています...";
-export const NO_SHARE_CONTENT_ERROR_MESSAGE =
-  "シェアできるコンテンツはありません。";
 export const NO_INSTANCE_ERROR_MESSAGE = "利用できるインスタンスはありません。";
-export const OPEN_SAMPLE_LINK_MESSAGE = "サンプルを開く";
+export const LINK_BUILDER_DESCRIPTION =
+  "あなたのサイトに設置するシェア用のURLを作成しましょう。";
+export const OPEN_CUSTOM_LINK_MESSAGE = "このパラメータで開く";
 export const INSTANCES_ADD_DESCRIPTION =
   "シェアしたいインスタンスのドメインを入力してください。";
 export const SHARE_CONTENT_DESCRIPTION =
