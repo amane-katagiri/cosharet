@@ -1,6 +1,6 @@
 # cosharet: COSmo SHARE Tool
 
-*COOL IMAGE*
+![cosharet screenshot](doc/cosharet_banner.png)
 
 ## Overview
 
@@ -9,8 +9,6 @@ This is a tiny hub for sharing posts in the Fediverse (currently Masotodon and M
 ## Usage
 
 ### Use share link
-
-*COOL IMAGE*
 
 1. Open the [link](https://cosharet.pages.dev/#text=Share%20from%20cosharet%20%F0%9F%98%8E&url=https://github.com/amane-katagiri/cosharet&hashtags=cosharet,test) on your favorite site.
 1. Select or add a fediverse instance you want to share from.
