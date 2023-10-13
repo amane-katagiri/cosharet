@@ -24,7 +24,9 @@ Install link [https://cosharet.pages.dev/#text=text you want to share 😎&url=h
 - `url`: Url you want to share with (must be encoded: `https%3A%2F%2Fexample.com%2F`)
 - `hashtags`: Hashtags you want share (must be split with comma: `hashtag,with,comma,separation`)
 - `theme`: Name of page theme (with light/dark mode)
-  - `default`
+  - `bluebird`
+  - `greenballoon`
+  - `redtriangle`
 
 You can modify `theme` colors, in hex style (`#RGB`, `#RGBA`, `#RRGGBB`, `#RRGGBBAA`) or color name (`aliceblue` ...).
 
