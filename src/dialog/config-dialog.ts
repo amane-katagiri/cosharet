@@ -11,6 +11,7 @@ import {
 import { Dialog } from ".";
 import { Theme } from "../color";
 import { Instance, InstanceType, classify } from "../instance";
+import { Bookmarklet } from "../bookmarklet";
 
 const { a, div, button, input, label } = van.tags;
 
@@ -134,22 +135,7 @@ export const ConfigDialog = (
             `,
         },
         CONFIG_BOOKMARKLET_DESCRIPTION,
-        a(
-          {
-            href: `javascript:(function(){window.open('${location.protocol}//${location.host}/#url='+encodeURI(location.href)+'&text='+encodeURI(document.title))})();`,
-            onclick: () => false,
-            style: `
-              padding: 0.25em 0.5em;
-              border-radius: 0.25em;
-              cursor: default;
-              display: inline-block;
-              text-decoration: none;
-              color: ${theme.accentColor};
-              background: ${theme.componentBackground};
-              `,
-          },
-          "cosharet",
-        ),
+        Bookmarklet(theme),
       ),
       div(
         a(
