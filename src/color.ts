@@ -1,4 +1,5 @@
-export type Theme = {
+export type Theme<T extends string = string> = {
+  name?: T;
   text: string;
   background: string;
   componentBackground: string;

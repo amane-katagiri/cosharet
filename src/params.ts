@@ -1,5 +1,5 @@
 import { Theme, parseColorTheme } from "./color";
-import { defaultTheme, namedThemes } from "./config/theme";
+import { defaultTheme, namedThemes, namedThemeKeys } from "./config/theme";
 
 export type Params = { content: string | null; theme: Theme };
 
@@ -15,14 +15,13 @@ const buildParams = (params: {
     dark: Partial<Theme>;
   };
 }): Params => {
-  const namedTheme = namedThemes[params.theme.key ?? "default"] ?? {};
-  const baseTheme = {
-    light: { ...defaultTheme.light, ...namedTheme?.light },
-    dark: { ...defaultTheme.dark, ...namedTheme?.dark },
-  };
+  const namedTheme =
+    namedThemes[
+      (params.theme.key as (typeof namedThemeKeys)[number]) ?? "default"
+    ] ?? defaultTheme;
   const theme = window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? parseColorTheme(params.theme.dark, baseTheme.dark)
-    : parseColorTheme(params.theme.light, baseTheme.light);
+    ? parseColorTheme(params.theme.dark, namedTheme.dark)
+    : parseColorTheme(params.theme.light, namedTheme.light);
   const content = [
     params.content.text,
     params.content.url,

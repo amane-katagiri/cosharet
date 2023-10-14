@@ -8,10 +8,7 @@ import "./css/main.css";
 import { parseUrlParams } from "./params.js";
 import { updateState, restoreState, clearState } from "./state.js";
 import van from "vanjs-core";
-import {
-  EMPTY_PAGE_BOOKMARKLET_DESCRIPTION,
-  INSTANCES_ADD_BUTTON_LABEL,
-} from "./messages.js";
+import { INSTANCES_ADD_BUTTON_LABEL } from "./messages.js";
 import { FetchDialog } from "./dialog/fetch-dialog.js";
 import { InstanceList } from "./instance-list.js";
 import { defaultInstances } from "./config/instances.js";
@@ -20,8 +17,8 @@ import emoji_2699 from "./emoji/2699.svg";
 import { QuickDialog } from "./dialog/quick-dialog.js";
 import { ShareContent } from "./share-content.js";
 import { autoFocus } from "./dialog/index.js";
+import { BookmarkletList } from "./bookmarklet.js";
 import { LinkBuilder } from "./builder.js";
-import { Bookmarklet } from "./bookmarklet.js";
 
 const { div, button, img } = van.tags;
 
@@ -152,19 +149,7 @@ const addApp = (id: string) => {
                       `,
                   },
                   LinkBuilder(theme),
-                  div(
-                    {
-                      style: `
-                        display: flex;
-                        flex-wrap: wrap;
-                        justify-content: center;
-                        align-items: center;
-                        gap: 0.5em;
-                        `,
-                    },
-                    EMPTY_PAGE_BOOKMARKLET_DESCRIPTION,
-                    Bookmarklet(theme),
-                  ),
+                  BookmarkletList(),
                 ),
             () =>
               div(
