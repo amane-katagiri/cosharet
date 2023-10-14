@@ -149,7 +149,9 @@ export const ConfigDialog = (
           },
           import.meta.env.VITE_APP_TITLE,
         ),
-        " is a tiny hub for sharing posts in the Fediverse. ",
+        ` ${
+          import.meta.env.VITE_APP_VERSION
+        } is a tiny hub for sharing posts in the Fediverse.`,
       ),
       div(
         "Emoji graphics are licensed under a ",
