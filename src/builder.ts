@@ -1,7 +1,9 @@
 import van from "vanjs-core";
-import { LINK_BUILDER_DESCRIPTION, OPEN_CUSTOM_LINK_MESSAGE } from "./messages";
 import { namedThemeKeys } from "./config/theme";
 import { Theme } from "./color";
+import { getTranslator } from "./locale";
+
+const { t } = getTranslator();
 
 const { div, button, form, input, label, select, option } = van.tags;
 
@@ -15,7 +17,7 @@ export const LinkBuilder = (theme: Theme) =>
         gap: 1em;
         `,
     },
-    LINK_BUILDER_DESCRIPTION,
+    t("page/empty/builder/guide"),
     form(
       {
         style: `
@@ -97,7 +99,7 @@ export const LinkBuilder = (theme: Theme) =>
                background: ${theme.accentColor};
                `,
           },
-          OPEN_CUSTOM_LINK_MESSAGE,
+          t("page/empty/builder/open_custom_link"),
         ),
       ),
     ),

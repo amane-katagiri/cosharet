@@ -1,11 +1,10 @@
 import { Instance, getInstanceKey } from "./instance";
 import van from "vanjs-core";
-import {
-  INSTANCES_SHARE_BUTTON_LABEL,
-  NO_INSTANCE_ERROR_MESSAGE,
-} from "./messages";
 import { Theme } from "./color";
 import emoji_274c from "./emoji/274c.svg";
+import { getTranslator } from "./locale";
+
+const { t } = getTranslator();
 
 const { div, button, img, span } = van.tags;
 
@@ -104,7 +103,7 @@ export const InstanceList = (params: {
                         min-width: 64px;
                         `,
                     },
-                    INSTANCES_SHARE_BUTTON_LABEL,
+                    t("general/share"),
                   )
                 : "",
           ],
@@ -114,6 +113,6 @@ export const InstanceList = (params: {
         {
           style: itemStyle,
         },
-        NO_INSTANCE_ERROR_MESSAGE,
+        t("page/share/no_instance"),
       );
 };

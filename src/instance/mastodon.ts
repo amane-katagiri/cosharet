@@ -1,6 +1,8 @@
 import { Classifier, Generator, Instance } from ".";
-import { NETWORK_ERROR_MESSAGE, UNKNOWN_INSTANCE_MESSAGE } from "../messages";
 import { Params, buildShareText } from "../params";
+import { getTranslator } from "../locale";
+
+const { t } = getTranslator();
 
 /** @package */
 export const classify: Classifier<"mastodon"> = async (domain: string) => {
@@ -19,9 +21,9 @@ export const classify: Classifier<"mastodon"> = async (domain: string) => {
       };
     }
   } catch {
-    throw new Error(NETWORK_ERROR_MESSAGE);
+    throw new Error(t("alert/network_error"));
   }
-  throw new Error(UNKNOWN_INSTANCE_MESSAGE);
+  throw new Error(t("alert/unknown_instance"));
 };
 
 /** @package */

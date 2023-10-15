@@ -1,9 +1,11 @@
 import van from "vanjs-core";
-import { INSTANCES_SHARE_BUTTON_LABEL, QUICK_DIALOG_TITLE } from "../messages";
 import { Dialog } from ".";
 import { Theme } from "../color";
 import { ShareContent } from "../share-content";
 import { Instance } from "../instance";
+import { getTranslator } from "../locale";
+
+const { t } = getTranslator();
 
 const { button } = van.tags;
 
@@ -14,7 +16,7 @@ export const QuickDialog = (
   theme: Theme,
 ) =>
   Dialog(
-    QUICK_DIALOG_TITLE,
+    import.meta.env.VITE_APP_TITLE,
     () => {
       return [
         ShareContent(content, instance, theme),
@@ -27,7 +29,7 @@ export const QuickDialog = (
               `,
             onclick: onClickShare,
           },
-          INSTANCES_SHARE_BUTTON_LABEL,
+          t("general/share"),
         ),
       ];
     },

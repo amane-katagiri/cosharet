@@ -1,10 +1,9 @@
 import van from "vanjs-core";
 import { Theme } from "./color";
-import {
-  BOOKMARKLET_TITLE,
-  EMPTY_PAGE_BOOKMARKLET_DESCRIPTION,
-} from "./messages";
 import { namedThemeKeys, namedThemes } from "./config/theme";
+import { getTranslator } from "./locale";
+
+const { t } = getTranslator();
 
 const { a, div } = van.tags;
 
@@ -27,7 +26,7 @@ export const Bookmarklet = (theme: Theme) =>
         background: ${theme.componentBackground};
         `,
     },
-    BOOKMARKLET_TITLE,
+    import.meta.env.VITE_APP_TITLE,
   );
 
 export const BookmarkletList = () =>
@@ -41,7 +40,7 @@ export const BookmarkletList = () =>
         gap: 0.5em;
         `,
     },
-    EMPTY_PAGE_BOOKMARKLET_DESCRIPTION,
+    t("page/empty/bookmarklet/guide"),
     div(
       {
         style: `

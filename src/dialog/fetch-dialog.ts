@@ -1,12 +1,10 @@
 import van from "vanjs-core";
 import { Instance, classify } from "../instance";
-import {
-  INSTANCES_ADD_BUTTON_LABEL,
-  INSTANCES_ADD_DESCRIPTION,
-  LOADING_INSTANCE_MESSAGE,
-} from "../messages";
 import { Dialog, MODAL_DIALOG_AUTOFOCUS_CLASS_NAME } from ".";
 import { Theme } from "../color";
+import { getTranslator } from "../locale";
+
+const { t } = getTranslator();
 
 const { div, button, input } = van.tags;
 
@@ -21,7 +19,7 @@ export const FetchDialog = (
   const onclick = async (close: () => void) => {
     try {
       fetcherIsLoading.val = true;
-      fetcherInfo.val = LOADING_INSTANCE_MESSAGE;
+      fetcherInfo.val = t("dialog/fetch/loading_instance_info");
       addInstance((await classify(fetcherInput.val)).instance);
       close();
     } catch (e) {
@@ -36,14 +34,14 @@ export const FetchDialog = (
   );
 
   Dialog(
-    INSTANCES_ADD_BUTTON_LABEL,
+    t("dialog/fetch/title"),
     (close) => [
       () =>
         div(
           {
             style: `${fetcherError.val != null ? `color: red` : ``};`,
           },
-          fetcherError.val ?? fetcherInfo.val ?? INSTANCES_ADD_DESCRIPTION,
+          fetcherError.val ?? fetcherInfo.val ?? t("dialog/fetch/guide"),
         ),
       div(
         {

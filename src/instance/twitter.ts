@@ -1,6 +1,8 @@
 import { Classifier, Generator, Instance } from ".";
-import { UNKNOWN_INSTANCE_MESSAGE } from "../messages";
 import { Params } from "../params";
+import { getTranslator } from "../locale";
+
+const { t } = getTranslator();
 
 /** @package */
 export const classify: Classifier<"twitter"> = async (domain: string) => {
@@ -14,7 +16,7 @@ export const classify: Classifier<"twitter"> = async (domain: string) => {
       },
     };
   }
-  throw new Error(UNKNOWN_INSTANCE_MESSAGE);
+  throw new Error(t("alert/unknown_instance"));
 };
 
 /** @package */

@@ -1,17 +1,11 @@
 import van, { State } from "vanjs-core";
-import {
-  CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION,
-  CONFIG_BOOKMARKLET_DESCRIPTION,
-  CONFIG_DIALOG_TITLE,
-  CONFIG_OPEN_QUICK_SHARE_DESCRIPTION,
-  CONFIG_SHOW_INSTANCE_NAME_DESCRIPTION,
-  INSTANCES_CLEAR_DESCRIPTION,
-  INSTANCES_NAME_UPDATE_DESCRIPTION,
-} from "../messages";
 import { Dialog } from ".";
 import { Theme } from "../color";
 import { Instance, InstanceType, classify } from "../instance";
 import { Bookmarklet } from "../bookmarklet";
+import { getTranslator } from "../locale";
+
+const { t } = getTranslator();
 
 const { a, div, button, input, label } = van.tags;
 
@@ -50,20 +44,22 @@ export const ConfigDialog = (
   const fetcherIsLoading = van.state(false);
 
   Dialog(
-    CONFIG_DIALOG_TITLE,
+    t("dialog/config/title"),
     (close) => [
       ConfigFlagItem(
-        CONFIG_OPEN_QUICK_SHARE_DESCRIPTION,
+        t("dialog/config/enable_quick_share"),
         van.val(state.isQuickShareMode),
         state.setQuickShareModeFlag,
       ),
       ConfigFlagItem(
-        CONFIG_SHOW_INSTANCE_NAME_DESCRIPTION,
+        t("dialog/config/show_instance_name"),
         van.val(state.isShownInstanceName),
         state.setShowInstanceNameFlag,
       ),
       ConfigFlagItem(
-        CONFIG_APPEND_COSHARET_HASHTAG_DESCRIPTION,
+        t("dialog/config/append_app_hashtag", {
+          appHashTag: import.meta.env.VITE_APP_HASHTAG,
+        }),
         van.val(state.isAppendHashtag),
         state.setAppendHashtagFlag,
       ),
@@ -107,7 +103,7 @@ export const ConfigDialog = (
               background: ${theme.componentBackground};
               `,
           },
-          INSTANCES_NAME_UPDATE_DESCRIPTION,
+          t("dialog/config/update_instances_name"),
         ),
       ),
       div(
@@ -122,7 +118,7 @@ export const ConfigDialog = (
               background: ${theme.componentBackground};
               `,
           },
-          INSTANCES_CLEAR_DESCRIPTION,
+          t("dialog/config/clear_instances"),
         ),
       ),
       div(
@@ -134,7 +130,7 @@ export const ConfigDialog = (
             gap: 0.5em;
             `,
         },
-        CONFIG_BOOKMARKLET_DESCRIPTION,
+        t("dialog/config/clear_instances"),
         Bookmarklet(theme),
       ),
       div(

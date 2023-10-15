@@ -8,7 +8,6 @@ import "./css/main.css";
 import { buildShareText, parseUrlParams } from "./params.js";
 import { updateState, restoreState, clearState } from "./state.js";
 import van from "vanjs-core";
-import { INSTANCES_ADD_BUTTON_LABEL } from "./messages.js";
 import { FetchDialog } from "./dialog/fetch-dialog.js";
 import { InstanceList } from "./instance-list.js";
 import { defaultInstances } from "./config/instances.js";
@@ -19,6 +18,9 @@ import { ShareContent } from "./share-content.js";
 import { autoFocus } from "./dialog/index.js";
 import { BookmarkletList } from "./bookmarklet.js";
 import { LinkBuilder } from "./builder.js";
+import { getTranslator } from "./locale";
+
+const { t } = getTranslator();
 
 const { div, button, img } = van.tags;
 
@@ -191,7 +193,7 @@ const addApp = (id: string) => {
                     autoFocus();
                   },
                 },
-                INSTANCES_ADD_BUTTON_LABEL,
+                t("page/share/add_new_instance"),
               ),
               button(
                 {
