@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@hi18n/cli": "^0.1.11",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
@@ -22,6 +23,7 @@
     "vite": "^4.4.11"
   },
   "dependencies": {
+    "@hi18n/core": "^0.1.10",
     "vanjs-core": "^1.2.1",
     "vanjs-ui": "^0.8.1",
     "zod": "^3.22.4"
