@@ -1,5 +1,6 @@
 import { Classifier, Generator, Instance } from ".";
 import { NETWORK_ERROR_MESSAGE, UNKNOWN_INSTANCE_MESSAGE } from "../messages";
+import { Params, buildShareText } from "../params";
 
 /** @package */
 export const classify: Classifier<"mastodon"> = async (domain: string) => {
@@ -24,9 +25,15 @@ export const classify: Classifier<"mastodon"> = async (domain: string) => {
 };
 
 /** @package */
-export const generate: Generator = (instance: Instance, content: string) => {
+export const generate: Generator = (
+  instance: Instance,
+  content: Params["content"],
+) => {
   if (instance.type !== "mastodon") {
     return null;
   }
-  return `https://${instance.url}/share?text=${encodeURIComponent(content)}`;
+  const text = buildShareText(content);
+  return text != null
+    ? `https://${instance.url}/share?text=${encodeURIComponent(text)}`
+    : null;
 };

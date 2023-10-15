@@ -5,7 +5,7 @@ import {
   sortInstance,
 } from "./instance/index.js";
 import "./css/main.css";
-import { parseUrlParams } from "./params.js";
+import { buildShareText, parseUrlParams } from "./params.js";
 import { updateState, restoreState, clearState } from "./state.js";
 import van from "vanjs-core";
 import { INSTANCES_ADD_BUTTON_LABEL } from "./messages.js";
@@ -41,6 +41,7 @@ const addApp = (id: string) => {
         : document.location.search,
     ),
   );
+  const body = buildShareText(content);
 
   const addInstance = (instance: Instance, q?: number) => {
     instances.val = [
@@ -76,17 +77,18 @@ const addApp = (id: string) => {
     clearState(["instances"]);
   };
   const share = (instance: Instance) => {
-    const href = generate(
-      instance,
-      content == null
-        ? ""
-        : `${content}${
-            isAppendHashtag.val &&
-            !content.includes(`#${import.meta.env.VITE_APP_HASHTAG}`)
-              ? `#${import.meta.env.VITE_APP_HASHTAG} `
-              : ""
-          }`,
-    );
+    const href = generate(instance, {
+      ...content,
+      hashtags: `${content.hashtags ?? ""}${
+        isAppendHashtag.val
+          ? content.hashtags == null || content.hashtags.length === 0
+            ? import.meta.env.VITE_APP_HASHTAG
+            : !content.hashtags.includes(import.meta.env.VITE_APP_HASHTAG)
+            ? `,${import.meta.env.VITE_APP_HASHTAG}`
+            : ""
+          : ""
+      }`,
+    });
     if (href == null) {
       return;
     }
@@ -95,13 +97,8 @@ const addApp = (id: string) => {
     location.href = href;
   };
 
-  if (isQuickShareMode.val && instances.val.length !== 0 && content != null) {
-    QuickDialog(
-      () => share(instances.val[0]),
-      content,
-      instances.val[0],
-      theme,
-    );
+  if (isQuickShareMode.val && instances.val.length !== 0 && body != null) {
+    QuickDialog(() => share(instances.val[0]), body, instances.val[0], theme);
     autoFocus();
   }
 
@@ -138,8 +135,8 @@ const addApp = (id: string) => {
                 gap: 1em;
                 `,
             },
-            content != null
-              ? ShareContent(content, null, theme)
+            body != null
+              ? ShareContent(body, null, theme)
               : div(
                   {
                     style: `
@@ -164,7 +161,7 @@ const addApp = (id: string) => {
                     ? instances.oldVal
                     : instances.val,
                   selectedInstanceKey: selectedInstanceKey.val,
-                  isContentEmpty: content == null,
+                  isContentEmpty: body == null,
                   isShownInstanceName: isShownInstanceName.val,
                   theme,
                   onClickItem: (instance: Instance) => {

@@ -1,9 +1,11 @@
+import { Params } from "../params";
 import * as mastodon from "./mastodon";
 import * as misskey from "./misskey";
+import * as twitter from "./twitter";
 
 import { z } from "zod";
 
-const INSTANCES = ["mastodon", "misskey"] as const;
+const INSTANCES = ["mastodon", "misskey", "twitter"] as const;
 
 export type Instance<T extends string = string> = {
   type: T;
@@ -32,17 +34,25 @@ export type InstanceType = (typeof INSTANCES)[number];
 export type Classifier<T extends string> = (
   domain: string,
 ) => Promise<{ status: true; instance: Instance<T> }>;
-export type Generator = (instance: Instance, content: string) => string | null;
+export type Generator = (
+  instance: Instance,
+  content: Params["content"],
+) => string | null;
 
-const classifiers: Classifier<InstanceType>[] = [
-  mastodon.classify,
-  misskey.classify,
-];
-const generators: Generator[] = [mastodon.generate, misskey.generate];
+const classifiers: { [k in InstanceType]: Classifier<k> } = {
+  mastodon: mastodon.classify,
+  misskey: misskey.classify,
+  twitter: twitter.classify,
+};
+const generators: { [k in InstanceType]: Generator } = {
+  mastodon: mastodon.generate,
+  misskey: misskey.generate,
+  twitter: twitter.generate,
+};
 
 export const classify = (domain: string) =>
-  Promise.any(classifiers.map((c) => c(domain)));
-export const generate = (instance: Instance, content: string) =>
-  generators
+  Promise.any(Object.values(classifiers).map((c) => c(domain)));
+export const generate = (instance: Instance, content: Params["content"]) =>
+  Object.values(generators)
     .map((g) => g(instance, content))
     .filter((item) => item != null)[0] ?? null;
