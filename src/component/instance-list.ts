@@ -1,8 +1,8 @@
-import { Instance, getInstanceKey } from "./instance";
+import { Instance, getInstanceKey } from "../instance";
 import van from "vanjs-core";
-import { Theme } from "./color";
-import emoji_274c from "./emoji/274c.svg";
-import { getTranslator } from "./locale";
+import { Theme } from "../theme";
+import emoji_274c from "../emoji/274c.svg";
+import { getTranslator } from "../locale";
 
 const { t } = getTranslator();
 

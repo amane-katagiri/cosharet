@@ -1,7 +1,7 @@
 import van from "vanjs-core";
-import { Theme } from "./color";
-import { namedThemeKeys, namedThemes } from "./config/theme";
-import { getTranslator } from "./locale";
+import { Theme } from "../theme";
+import { namedThemeKeys, namedThemes } from "../config/theme";
+import { getTranslator } from "../locale";
 
 const { t } = getTranslator();
 

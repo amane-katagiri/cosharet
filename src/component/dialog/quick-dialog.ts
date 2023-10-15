@@ -1,9 +1,9 @@
 import van from "vanjs-core";
 import { Dialog } from ".";
-import { Theme } from "../color";
 import { ShareContent } from "../share-content";
-import { Instance } from "../instance";
-import { getTranslator } from "../locale";
+import { Theme } from "../../theme";
+import { Instance } from "../../instance";
+import { getTranslator } from "../../locale";
 
 const { t } = getTranslator();
 

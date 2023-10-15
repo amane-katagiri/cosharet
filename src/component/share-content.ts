@@ -1,9 +1,9 @@
 import van from "vanjs-core";
-import emoji_1f4cb from "./emoji/1f4cb.svg";
-import { Theme } from "./color";
-import { Instance } from "./instance";
+import emoji_1f4cb from "../emoji/1f4cb.svg";
+import { Theme } from "../theme";
+import { Instance } from "../instance";
 const { div, img, span } = van.tags;
-import { getTranslator } from "./locale";
+import { getTranslator } from "../locale";
 
 const { t } = getTranslator();
 

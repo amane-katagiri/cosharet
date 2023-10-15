@@ -1,8 +1,8 @@
 import van from "vanjs-core";
-import { Instance, classify } from "../instance";
+import { Instance, classify } from "../../instance";
 import { Dialog, MODAL_DIALOG_AUTOFOCUS_CLASS_NAME } from ".";
-import { Theme } from "../color";
-import { getTranslator } from "../locale";
+import { Theme } from "../../theme";
+import { getTranslator } from "../../locale";
 
 const { t } = getTranslator();
 

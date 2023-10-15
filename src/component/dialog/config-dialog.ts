@@ -1,9 +1,9 @@
 import van, { State } from "vanjs-core";
 import { Dialog } from ".";
-import { Theme } from "../color";
-import { Instance, InstanceType, classify } from "../instance";
+import { Theme } from "../../theme";
+import { Instance, InstanceType, classify } from "../../instance";
 import { Bookmarklet } from "../bookmarklet";
-import { getTranslator } from "../locale";
+import { getTranslator } from "../../locale";
 
 const { t } = getTranslator();
 

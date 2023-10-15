@@ -1,23 +1,18 @@
-import {
-  Instance,
-  generate,
-  getInstanceKey,
-  sortInstance,
-} from "./instance/index.js";
+import { Instance, generate, getInstanceKey, sortInstance } from "./instance";
 import "./css/main.css";
-import { buildShareText, parseUrlParams } from "./params.js";
-import { updateState, restoreState, clearState } from "./state.js";
+import { buildShareText, parseUrlParams } from "./params";
+import { updateState, restoreState, clearState } from "./state";
 import van from "vanjs-core";
-import { FetchDialog } from "./dialog/fetch-dialog.js";
-import { InstanceList } from "./instance-list.js";
-import { defaultInstances } from "./config/instances.js";
-import { ConfigDialog } from "./dialog/config-dialog.js";
+import { FetchDialog } from "./component/dialog/fetch-dialog";
+import { InstanceList } from "./component/instance-list";
+import { defaultInstances } from "./config/instances";
+import { ConfigDialog } from "./component/dialog/config-dialog";
 import emoji_2699 from "./emoji/2699.svg";
-import { QuickDialog } from "./dialog/quick-dialog.js";
-import { ShareContent } from "./share-content.js";
-import { autoFocus } from "./dialog/index.js";
-import { BookmarkletList } from "./bookmarklet.js";
-import { LinkBuilder } from "./builder.js";
+import { QuickDialog } from "./component/dialog/quick-dialog";
+import { ShareContent } from "./component/share-content";
+import { autoFocus } from "./component/dialog";
+import { BookmarkletList } from "./component/bookmarklet";
+import { LinkBuilder } from "./component/link-builder";
 import { getTranslator } from "./locale";
 
 const { t } = getTranslator();

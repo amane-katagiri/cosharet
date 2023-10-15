@@ -1,7 +1,7 @@
 import van, { ChildDom } from "vanjs-core";
 import { Modal } from "vanjs-ui";
-import { Theme } from "../color";
-import emoji_274c from "../emoji/274c.svg";
+import { Theme } from "../../theme";
+import emoji_274c from "../../emoji/274c.svg";
 
 const { div, button, img } = van.tags;
 

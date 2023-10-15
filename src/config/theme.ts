@@ -1,4 +1,4 @@
-import { Theme } from "../color";
+import { Theme } from "../theme";
 
 export const defaultTheme: { light: Theme<"default">; dark: Theme<"default"> } =
   {

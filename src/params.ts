@@ -1,4 +1,4 @@
-import { Theme, parseColorTheme } from "./color";
+import { Theme, parseColorTheme } from "./theme";
 import { defaultTheme, namedThemes, namedThemeKeys } from "./config/theme";
 
 export type Params = {
