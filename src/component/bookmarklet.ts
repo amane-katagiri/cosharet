@@ -25,7 +25,7 @@ export const Bookmarklet = (theme: Theme, openDirect: boolean = true) => {
             location.host
           }/#theme=${encodeURIComponent(
             theme.name ?? "default",
-          )}&url='+encodeURI(location.href)+'&text='+encodeURI(document.title);a.onclick=function(e){e.target.remove()}}})();`,
+          )}&url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title);a.onclick=function(e){e.target.remove()}}})();`,
       onclick: () => {
         alert(t("page/empty/bookmarklet/alert/guide"));
         return false;
