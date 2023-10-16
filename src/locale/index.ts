@@ -1,5 +1,6 @@
 import { Book, Message, getTranslator as _getTranslator } from "@hi18n/core";
 import catalogJa from "./ja";
+import catalogEn from "./en";
 
 export type Vocabulary = {
   "alert/network_error": Message;
@@ -34,6 +35,7 @@ export type Vocabulary = {
 
 export const book = new Book<Vocabulary>({
   ja: catalogJa,
+  en: catalogEn,
 });
 
 const lang = window.navigator.language;
