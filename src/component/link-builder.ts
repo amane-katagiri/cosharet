@@ -31,20 +31,28 @@ export const LinkBuilder = (theme: Theme) =>
       [
         {
           name: "url",
+          label: t("general/url"),
           example: import.meta.env.VITE_APP_SOURCE_LINK,
           required: true,
         },
         {
           name: "text",
+          label: t("page/empty/builder/text/label"),
           example: import.meta.env.VITE_APP_DESCRIPTION,
           required: true,
         },
         {
           name: "hashtags",
+          label: t("general/hashtags"),
           example: `${import.meta.env.VITE_APP_HASHTAG},fediverse`,
           required: false,
         },
-        { name: "theme", example: namedThemeKeys, required: true },
+        {
+          name: "theme",
+          label: t("general/theme"),
+          example: namedThemeKeys,
+          required: true,
+        },
       ].map((param) =>
         label(
           {
@@ -63,7 +71,7 @@ export const LinkBuilder = (theme: Theme) =>
                  text-align: initial;
                  `,
             },
-            param.name,
+            param.label,
           ),
           typeof param.example === "string"
             ? input({
