@@ -118,7 +118,7 @@ const addApp = (id: string) => {
               max-width: 720px;
               min-height: 100dvh;
               margin: 0 auto;
-              padding: 1em 0.5em 0.5em 0.5em;
+              padding: 1em 0.5em;
               box-sizing: border-box;
               gap: 1em;
               text-align: center;
