@@ -18,10 +18,14 @@ export type Vocabulary = {
   "page/empty/bookmarklet/guide": Message;
   "page/empty/builder/guide": Message;
   "page/empty/builder/open_custom_link": Message;
+  "page/empty/builder/enable_darkmode": Message;
+  "page/empty/builder/enable_open_direct": Message;
+  "page/empty/instances/guide": Message;
   "page/share/no_instance": Message;
   "page/share/add_new_instance": Message;
   "page/share/guide": Message;
   "general/share": Message;
+  "general/theme": Message;
 };
 
 export const book = new Book<Vocabulary>({

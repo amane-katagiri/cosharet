@@ -29,8 +29,14 @@ export default new Catalog<Vocabulary>("ja", {
     "あなたのサイトに設置するシェア用のURLを作成しましょう。",
   ),
   "page/empty/builder/open_custom_link": msg("このパラメータで開く"),
+  "page/empty/builder/enable_darkmode": msg("ダークモード"),
+  "page/empty/builder/enable_open_direct": msg("常に直接開く"),
+  "page/empty/instances/guide": msg(
+    "このブラウザでは、以下のインスタンスを利用できます。",
+  ),
   "page/share/no_instance": msg("利用できるインスタンスはありません。"),
   "page/share/add_new_instance": msg("新しいインスタンスを追加する"),
   "page/share/guide": msg("お好きなSNSで以下の内容をシェアできます。"),
   "general/share": msg("シェア"),
+  "general/theme": msg("テーマ"),
 });

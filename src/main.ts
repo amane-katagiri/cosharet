@@ -17,7 +17,7 @@ import { getTranslator } from "./locale";
 
 const { t } = getTranslator();
 
-const { div, button, img } = van.tags;
+const { div, button, img, hr } = van.tags;
 
 const addApp = (id: string) => {
   const state = restoreState();
@@ -143,7 +143,10 @@ const addApp = (id: string) => {
                       `,
                   },
                   LinkBuilder(theme),
-                  BookmarkletList(),
+                  div(hr()),
+                  BookmarkletList(theme),
+                  div(hr()),
+                  t("page/empty/instances/guide"),
                 ),
             () =>
               div(

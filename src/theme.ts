@@ -1,4 +1,6 @@
-export type Theme<T extends string = string> = {
+import { ThemeKey } from "./config/theme";
+
+export type Theme<T extends ThemeKey = ThemeKey> = {
   name?: T;
   text: string;
   background: string;
