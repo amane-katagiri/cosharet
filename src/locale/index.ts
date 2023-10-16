@@ -28,10 +28,11 @@ export const book = new Book<Vocabulary>({
   ja: catalogJa,
 });
 
+const lang = window.navigator.language;
 export const getTranslator = () =>
   _getTranslator(
     book,
-    Object.keys(book.catalogs).includes(window.navigator.language)
-      ? window.navigator.language
+    Object.keys(book.catalogs).includes(lang)
+      ? lang
       : import.meta.env.VITE_APP_LANG,
   );
