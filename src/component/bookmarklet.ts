@@ -26,7 +26,10 @@ export const Bookmarklet = (theme: Theme, openDirect: boolean = true) => {
           }/#theme=${encodeURIComponent(
             theme.name ?? "default",
           )}&url='+encodeURI(location.href)+'&text='+encodeURI(document.title);a.onclick=function(e){e.target.remove()}}})();`,
-      onclick: () => false,
+      onclick: () => {
+        alert(t("page/empty/bookmarklet/alert/guide"));
+        return false;
+      },
       style: `
         padding: 0.25em 0.5em;
         border-radius: 0.25em;

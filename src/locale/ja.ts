@@ -25,6 +25,9 @@ export default new Catalog<Vocabulary>("ja", {
   "page/empty/bookmarklet/guide": msg(
     "または、ブックマークレットが必要ですか？",
   ),
+  "page/empty/bookmarklet/alert/guide": msg(
+    "このリンクをブックマークバーにドラッグ・アンド・ドロップしてください。",
+  ),
   "page/empty/builder/guide": msg(
     "あなたのサイトに設置するシェア用のURLを作成しましょう。",
   ),

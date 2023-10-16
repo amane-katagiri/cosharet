@@ -16,6 +16,7 @@ export type Vocabulary = {
   "dialog/fetch/loading_instance_info": Message;
   "dialog/quick_share/guide": Message<{ domain: string }>;
   "page/empty/bookmarklet/guide": Message;
+  "page/empty/bookmarklet/alert/guide": Message;
   "page/empty/builder/guide": Message;
   "page/empty/builder/open_custom_link": Message;
   "page/empty/builder/enable_darkmode": Message;
