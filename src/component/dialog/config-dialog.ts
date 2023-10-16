@@ -130,7 +130,7 @@ export const ConfigDialog = (
             gap: 0.5em;
             `,
         },
-        t("dialog/config/clear_instances"),
+        t("dialog/config/add_bookmarklet"),
         Bookmarklet(theme),
       ),
       div(
