@@ -29,5 +29,5 @@ export const generate: Generator = (
   }
   return `https://social-plugins.${
     instance.url
-  }/lineit/share?u=${encodeURIComponent(content.url ?? "")}`;
+  }/lineit/share?url=${encodeURIComponent(content.url ?? "")}`;
 };
