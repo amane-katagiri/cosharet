@@ -17,11 +17,14 @@ export const Bookmarklet = (theme: Theme, openDirect: boolean = true) => {
           }/#theme=${encodeURIComponent(
             theme.name ?? "default",
           )}&url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title))})();`
-        : `javascript:(function(){var a=document.getElementById('share-with-cosharet-${idSuffix}');if(a){a.remove()}else{a=document.body.insertBefore(document.createElement('a'),document.body.firstChild);a.id='share-with-cosharet-${idSuffix}';a.innerHTML='share with cosharet';a.target="_blank";a.style="position:fixed;top:1em;left:1em;z-index:2147483647;color:${
+        : `javascript:(function(){var a=document.getElementById('share-with-cosharet-${idSuffix}');if(a){a.remove()}else{a=document.body.insertBefore(document.createElement('a'),document.body.firstChild);a.id='share-with-cosharet-${idSuffix}';a.innerHTML='share with ${import.meta.env.VITE_APP_TITLE.replace(
+            "'",
+            "\\'",
+          )}';a.target="_blank";a.style="position:fixed;top:1em;left:1em;z-index:2147483647;padding:0.5em 1em;border-radius:0.25em;text-decoration:none;color:${
             theme.accentColor
           };border:solid 1px ${theme.accentColor};background-color:${
             theme.componentBackground
-          };padding:1em;";a.href='${location.protocol}//${
+          };";a.href='${location.protocol}//${
             location.host
           }/#theme=${encodeURIComponent(
             theme.name ?? "default",
