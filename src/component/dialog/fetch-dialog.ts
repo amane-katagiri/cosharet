@@ -6,7 +6,7 @@ import { getTranslator } from "../../locale";
 
 const { t } = getTranslator();
 
-const { div, button, input, ul, li, code } = van.tags;
+const { div, button, input } = van.tags;
 
 export const FetchDialog = (
   addInstance: (instance: Instance, q?: number) => void,
@@ -16,11 +16,11 @@ export const FetchDialog = (
   const fetcherError = van.state<string | null>(null);
   const fetcherInfo = van.state<string | null>(null);
   const fetcherInput = van.state("");
-  const onclick = async (close: () => void) => {
+  const onclick = async (domain: string, close: () => void) => {
     try {
       fetcherIsLoading.val = true;
       fetcherInfo.val = t("dialog/fetch/loading_instance_info");
-      addInstance((await classify(fetcherInput.val)).instance);
+      addInstance((await classify(domain)).instance);
       close();
     } catch (e) {
       fetcherError.val = String(e instanceof AggregateError ? e.errors[0] : e);
@@ -58,7 +58,7 @@ export const FetchDialog = (
           },
           onkeydown: (e) => {
             if (!disabled.val && e?.key === "Enter") {
-              onclick(close);
+              onclick(fetcherInput.val, close);
             }
           },
           type: "text",
@@ -73,7 +73,7 @@ export const FetchDialog = (
         }),
         button(
           {
-            onclick: () => onclick(close),
+            onclick: () => onclick(fetcherInput.val, close),
             disabled,
             style: `
               color: ${theme.text};
@@ -83,28 +83,36 @@ export const FetchDialog = (
           "OK",
         ),
       ),
+      t("dialog/fetch/non_fediverse_list/guide"),
       div(
         {
           style: `
             display: flex;
-            flex-direction: column;
-            gap: 0.5em;
+            flex-wrap: wrap;
+            gap: 1em;
             `,
         },
-        t("dialog/fetch/non_fediverse_list/guide"),
-        ul(
-          {
-            style: `
-              padding: 0 1em;
-              margin: 0;
-              `,
-          },
-          [
-            { name: "X (formerly Twitter)", domain: "twitter.com" },
-            { name: "Facebook", domain: "facebook.com" },
-            { name: "LINE", domain: "line.me" },
-            { name: "はてなブックマーク", domain: "b.hatena.ne.jp" },
-          ].map((s) => li(code(s.domain), ` → ${s.name}`)),
+        [
+          { name: "X (formerly Twitter)", domain: "twitter.com" },
+          { name: "Facebook", domain: "facebook.com" },
+          { name: "LINE", domain: "line.me" },
+          { name: "はてなブックマーク", domain: "b.hatena.ne.jp" },
+        ].map((s) =>
+          div(
+            button(
+              {
+                onclick: () => {
+                  onclick(s.domain, close);
+                  fetcherInput.val = s.domain;
+                },
+                style: `
+                  color: ${theme.text};
+                  background: ${theme.componentBackground};
+                  `,
+              },
+              s.name,
+            ),
+          ),
         ),
       ),
     ],

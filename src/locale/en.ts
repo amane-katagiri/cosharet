@@ -23,7 +23,7 @@ export default new Catalog<Vocabulary>("en", {
   ),
   "dialog/fetch/loading_instance_info": msg("Loading Instance information..."),
   "dialog/fetch/non_fediverse_list/guide": msg(
-    "And enter following domains to add non-Fediverse services.",
+    "Or add the following non-fediverse services.",
   ),
   "dialog/quick_share/guide": msg("Share this content with {domain}."),
   "page/empty/bookmarklet/guide": msg("Or need a bookmarklet?"),

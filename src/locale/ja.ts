@@ -22,7 +22,7 @@ export default new Catalog<Vocabulary>("ja", {
     "インスタンス情報を取得しています...",
   ),
   "dialog/fetch/non_fediverse_list/guide": msg(
-    "さらに、以下のドメインを入力して非Fediverseサービスを追加できます。",
+    "または、以下の非Fediverseサービスを追加できます。",
   ),
   "dialog/quick_share/guide": msg("{domain}で以下の内容をシェアします。"),
   "page/empty/bookmarklet/guide": msg(
