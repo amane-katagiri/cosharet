@@ -6,7 +6,7 @@ import { getTranslator } from "../../locale";
 
 const { t } = getTranslator();
 
-const { div, button, input } = van.tags;
+const { div, button, input, ul, li, code } = van.tags;
 
 export const FetchDialog = (
   addInstance: (instance: Instance, q?: number) => void,
@@ -81,6 +81,30 @@ export const FetchDialog = (
               `,
           },
           "OK",
+        ),
+      ),
+      div(
+        {
+          style: `
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+            `,
+        },
+        t("dialog/fetch/non_fediverse_list/guide"),
+        ul(
+          {
+            style: `
+              padding: 0 1em;
+              margin: 0;
+              `,
+          },
+          [
+            { name: "X (formerly Twitter)", domain: "twitter.com" },
+            { name: "Facebook", domain: "facebook.com" },
+            { name: "LINE", domain: "line.me" },
+            { name: "はてなブックマーク", domain: "b.hatena.ne.jp" },
+          ].map((s) => li(code(s.domain), ` → ${s.name}`)),
         ),
       ),
     ],

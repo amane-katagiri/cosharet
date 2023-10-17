@@ -15,6 +15,7 @@ export type Vocabulary = {
   "dialog/fetch/title": Message;
   "dialog/fetch/guide": Message;
   "dialog/fetch/loading_instance_info": Message;
+  "dialog/fetch/non_fediverse_list/guide": Message;
   "dialog/quick_share/guide": Message<{ domain: string }>;
   "page/empty/bookmarklet/guide": Message;
   "page/empty/bookmarklet/alert/guide": Message;

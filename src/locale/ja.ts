@@ -21,6 +21,9 @@ export default new Catalog<Vocabulary>("ja", {
   "dialog/fetch/loading_instance_info": msg(
     "インスタンス情報を取得しています...",
   ),
+  "dialog/fetch/non_fediverse_list/guide": msg(
+    "さらに、以下のドメインを入力して非Fediverseサービスを追加できます。",
+  ),
   "dialog/quick_share/guide": msg("{domain}で以下の内容をシェアします。"),
   "page/empty/bookmarklet/guide": msg(
     "または、ブックマークレットが必要ですか？",

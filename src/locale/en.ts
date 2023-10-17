@@ -22,6 +22,9 @@ export default new Catalog<Vocabulary>("en", {
     "Enter the domain of the instance you want to share.",
   ),
   "dialog/fetch/loading_instance_info": msg("Loading Instance information..."),
+  "dialog/fetch/non_fediverse_list/guide": msg(
+    "And enter following domains to add non-Fediverse services.",
+  ),
   "dialog/quick_share/guide": msg("Share this content with {domain}."),
   "page/empty/bookmarklet/guide": msg("Or need a bookmarklet?"),
   "page/empty/bookmarklet/alert/guide": msg(
