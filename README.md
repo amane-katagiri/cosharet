@@ -64,7 +64,7 @@ pnpm run build
 
 ## Feature
 
-- Share links to the Fediverse.
+- Share links in the Fediverse and non-fediverse services.
 - Preview text to share before posting.
 - Save your instance list on your compuer.
 - Show frequently used instances on top.

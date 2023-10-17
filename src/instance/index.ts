@@ -2,10 +2,20 @@ import { Params } from "../params";
 import * as mastodon from "./mastodon";
 import * as misskey from "./misskey";
 import * as twitter from "./twitter";
+import * as hatenabookmark from "./hatenabookmark";
+import * as facebook from "./facebook";
+import * as line from "./line";
 
 import { z } from "zod";
 
-const INSTANCES = ["mastodon", "misskey", "twitter"] as const;
+const INSTANCES = [
+  "mastodon",
+  "misskey",
+  "twitter",
+  "hatenabookmark",
+  "facebook",
+  "line",
+] as const;
 
 export type Instance<T extends string = string> = {
   type: T;
@@ -43,11 +53,17 @@ const classifiers: { [k in InstanceType]: Classifier<k> } = {
   mastodon: mastodon.classify,
   misskey: misskey.classify,
   twitter: twitter.classify,
+  hatenabookmark: hatenabookmark.classify,
+  facebook: facebook.classify,
+  line: line.classify,
 };
 const generators: { [k in InstanceType]: Generator } = {
   mastodon: mastodon.generate,
   misskey: misskey.generate,
   twitter: twitter.generate,
+  hatenabookmark: hatenabookmark.generate,
+  facebook: facebook.generate,
+  line: line.generate,
 };
 
 export const classify = (domain: string) =>
