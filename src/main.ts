@@ -29,7 +29,6 @@ const addApp = (id: string) => {
   const selectedInstanceKey = van.state<string | null>(
     instances.val.length !== 0 ? getInstanceKey(instances.val[0]) : null,
   );
-  const isNavigating = van.state(false);
 
   const { content, theme } = parseUrlParams(
     new URLSearchParams(
@@ -89,7 +88,6 @@ const addApp = (id: string) => {
     if (href == null) {
       return;
     }
-    isNavigating.val = true;
     updateInstance(instance);
     location.href = href;
   };
@@ -157,9 +155,7 @@ const addApp = (id: string) => {
                   `,
                 },
                 InstanceList({
-                  instances: isNavigating.val
-                    ? instances.oldVal
-                    : instances.val,
+                  instances: instances.val,
                   selectedInstanceKey: selectedInstanceKey.val,
                   isContentEmpty: body == null,
                   isShownInstanceName: isShownInstanceName.val,
