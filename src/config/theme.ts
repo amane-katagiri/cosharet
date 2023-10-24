@@ -32,9 +32,9 @@ export const namedThemeKeys = [
 ] as const;
 export type ThemeKey = (typeof namedThemeKeys)[number];
 export const namedThemes: {
-  [k in ThemeKey[number]]: {
-    light: Theme;
-    dark: Theme;
+  [k in ThemeKey]: {
+    light: Theme<k>;
+    dark: Theme<k>;
   };
 } = {
   default: defaultTheme,
