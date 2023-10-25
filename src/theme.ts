@@ -12,7 +12,7 @@ export type Theme<T extends ThemeKey = ThemeKey> = {
 const isColor = (colorLike: unknown) =>
   typeof colorLike === "string" &&
   colorLike.match(
-    /#[0-9a-f]{3}|#[0-9a-f]{4}|#[0-9a-f]{6}|#[0-9a-f]{8}|[a-zA-Z]+/,
+    /#[0-9a-f]{3}|#[0-9a-f]{4}|#[0-9a-f]{6}|#[0-9a-f]{8}|[a-zA-Z]+|\(rgba?|hsla?|\(repeat-\)?\(linear|conic|radial\)-gradient\)(.+)/,
   );
 
 export const parseColorTheme = (
