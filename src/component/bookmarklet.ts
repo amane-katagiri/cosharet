@@ -118,18 +118,26 @@ export const BookmarkletList = (theme: Theme) => {
       label(
         input({
           type: "checkbox",
-          onchange: (e) => (isDarkMode.val = e.target.checked),
-          checked: isDarkMode.val,
+          onchange: (e) => {
+            openDirect.val = e.target.checked;
+            if (e.target.checked) {
+              isDarkMode.val = window.matchMedia(
+                "(prefers-color-scheme: dark)",
+              ).matches;
+            }
+          },
+          checked: openDirect.val,
         }),
-        t("page/empty/builder/enable_darkmode"),
+        t("page/empty/builder/enable_open_direct"),
       ),
       label(
         input({
           type: "checkbox",
-          onchange: (e) => (openDirect.val = e.target.checked),
-          checked: openDirect.val,
+          onchange: (e) => (isDarkMode.val = e.target.checked),
+          checked: isDarkMode,
+          disabled: openDirect,
         }),
-        t("page/empty/builder/enable_open_direct"),
+        t("page/empty/builder/enable_darkmode"),
       ),
     ),
   );
