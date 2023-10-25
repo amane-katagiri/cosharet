@@ -7,6 +7,8 @@ const { t } = getTranslator();
 
 const { a, div, select, option, label, input } = van.tags;
 
+const encode = (text: string) => encodeURIComponent(text).replace("'", "\\'");
+
 export const Bookmarklet = (theme: Theme, openDirect: boolean = true) => {
   const idSuffix = Math.floor(Math.random() * 2147483647);
   return a(
@@ -14,19 +16,16 @@ export const Bookmarklet = (theme: Theme, openDirect: boolean = true) => {
       href: openDirect
         ? `javascript:(function(){window.open('${location.protocol}//${
             location.host
-          }/#theme=${encodeURIComponent(
+          }/#theme=${encode(
             theme.name ?? "default",
           )}&url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title))})();`
-        : `javascript:(function(){var a=document.getElementById('share-with-cosharet-${idSuffix}');if(a){a.remove()}else{a=document.body.insertBefore(document.createElement('a'),document.body.firstChild);a.id='share-with-cosharet-${idSuffix}';a.innerHTML='share with ${import.meta.env.VITE_APP_TITLE.replace(
-            "'",
-            "\\'",
-          )}';a.target="_blank";a.style="position:fixed;top:1em;left:1em;z-index:2147483647;padding:0.5em 1em;border-radius:0.25em;text-decoration:none;font-size:16px;font-family:sans-serif;color:${
-            theme.accentColor
-          };border:solid 1px ${theme.accentColor};background-color:${
-            theme.componentBackground
-          };";a.href='${location.protocol}//${
-            location.host
-          }/#theme=${encodeURIComponent(
+        : `javascript:(function(){var a=document.getElementById('share-with-cosharet-${idSuffix}');if(a){a.remove()}else{a=document.body.insertBefore(document.createElement('a'),document.body.firstChild);a.id='share-with-cosharet-${idSuffix}';a.innerHTML='share with ${encode(
+            import.meta.env.VITE_APP_TITLE,
+          )}';a.target='_blank';a.style='position:fixed;top:1em;left:1em;z-index:2147483647;padding:0.5em 1em;border-radius:0.25em;text-decoration:none;font-size:16px;font-family:sans-serif;color:${encodeURIComponent(
+            encode(theme.accentColor),
+          )};border:solid 1px ${encode(theme.accentColor)};background:${encode(
+            theme.componentBackground,
+          )};';a.href='${location.protocol}//${location.host}/#theme=${encode(
             theme.name ?? "default",
           )}&url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title);a.onclick=function(e){e.target.remove()}}})();`,
       onclick: () => {
