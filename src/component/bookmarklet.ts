@@ -23,9 +23,9 @@ export const Bookmarklet = (theme: Theme, openDirect: boolean = true) => {
             import.meta.env.VITE_APP_TITLE,
           )}';a.target='_blank';a.style='position:fixed;top:1em;left:1em;z-index:2147483647;padding:0.5em 1em;border-radius:0.25em;text-decoration:none;font-size:16px;font-family:sans-serif;color:${encodeURIComponent(
             encode(theme.linkText),
-          )};border:solid 1px ${encode(theme.linkText)};background:${encode(
-            theme.componentBackground,
-          )};';a.href='${location.protocol}//${location.host}/#theme=${encode(
+          )};background:${encode(theme.componentBackground)};';a.href='${
+            location.protocol
+          }//${location.host}/#theme=${encode(
             theme.name ?? "default",
           )}&url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title);a.onclick=function(e){e.target.remove()}}})();`,
       onclick: () => {
@@ -39,7 +39,6 @@ export const Bookmarklet = (theme: Theme, openDirect: boolean = true) => {
         display: inline-block;
         text-decoration: none;
         color: ${theme.linkText};
-        border: solid 1px ${theme.linkText};
         background: ${theme.componentBackground};
         `,
     },
