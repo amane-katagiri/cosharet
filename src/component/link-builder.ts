@@ -103,7 +103,7 @@ export const LinkBuilder = (theme: Theme) =>
         button(
           {
             style: `
-               color: ${theme.background};
+               color: ${theme.accentText};
                background: ${theme.accentColor};
                `,
           },

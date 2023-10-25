@@ -22,8 +22,8 @@ export const Bookmarklet = (theme: Theme, openDirect: boolean = true) => {
         : `javascript:(function(){var a=document.getElementById('share-with-cosharet-${idSuffix}');if(a){a.remove()}else{a=document.body.insertBefore(document.createElement('a'),document.body.firstChild);a.id='share-with-cosharet-${idSuffix}';a.innerHTML='share with ${encode(
             import.meta.env.VITE_APP_TITLE,
           )}';a.target='_blank';a.style='position:fixed;top:1em;left:1em;z-index:2147483647;padding:0.5em 1em;border-radius:0.25em;text-decoration:none;font-size:16px;font-family:sans-serif;color:${encodeURIComponent(
-            encode(theme.accentColor),
-          )};border:solid 1px ${encode(theme.accentColor)};background:${encode(
+            encode(theme.linkText),
+          )};border:solid 1px ${encode(theme.linkText)};background:${encode(
             theme.componentBackground,
           )};';a.href='${location.protocol}//${location.host}/#theme=${encode(
             theme.name ?? "default",
@@ -38,8 +38,8 @@ export const Bookmarklet = (theme: Theme, openDirect: boolean = true) => {
         cursor: default;
         display: inline-block;
         text-decoration: none;
-        color: ${theme.accentColor};
-        border: solid 1px ${theme.accentColor};
+        color: ${theme.linkText};
+        border: solid 1px ${theme.linkText};
         background: ${theme.componentBackground};
         `,
     },

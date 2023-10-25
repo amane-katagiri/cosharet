@@ -97,7 +97,7 @@ export const InstanceList = (params: {
                     {
                       onclick: () => onClickShare(instance),
                       style: `
-                        color: ${theme.background};
+                        color: ${theme.accentText};
                         background: ${theme.accentColor};
                         width: 20%;
                         min-width: 64px;

@@ -68,17 +68,21 @@ export const parseUrlParams = (urlParams: URLSearchParams): Params => {
       key: theme !== "" ? theme : null,
       light: {
         text: urlParams.get("gflc") ?? undefined,
+        linkText: urlParams.get("lflc") ?? undefined,
+        accentText: urlParams.get("falc") ?? undefined,
         background: urlParams.get("gblc") ?? undefined,
         componentBackground: urlParams.get("cblc") ?? undefined,
         selectedItemBackground: urlParams.get("sblc") ?? undefined,
-        accentColor: urlParams.get("galc") ?? undefined,
+        accentColor: urlParams.get("balc") ?? undefined,
       },
       dark: {
         text: urlParams.get("gfdc") ?? undefined,
+        linkText: urlParams.get("lfdc") ?? undefined,
+        accentText: urlParams.get("fadc") ?? undefined,
         background: urlParams.get("gbdc") ?? undefined,
         componentBackground: urlParams.get("cbdc") ?? undefined,
         selectedItemBackground: urlParams.get("sbdc") ?? undefined,
-        accentColor: urlParams.get("gadc") ?? undefined,
+        accentColor: urlParams.get("badc") ?? undefined,
       },
     },
   });

@@ -140,7 +140,7 @@ export const ConfigDialog = (
             target: "_blank",
             rel: "noopener noreferrer",
             style: `
-              color: ${theme.accentColor}
+              color: ${theme.linkText}
               `,
           },
           import.meta.env.VITE_APP_TITLE,
@@ -157,7 +157,7 @@ export const ConfigDialog = (
             target: "_blank",
             rel: "noopener noreferrer",
             style: `
-              color: ${theme.accentColor}
+              color: ${theme.linkText}
               `,
           },
           "CC BY 4.0",
@@ -169,7 +169,7 @@ export const ConfigDialog = (
             target: "_blank",
             rel: "noopener noreferrer",
             style: `
-              color: ${theme.accentColor}
+              color: ${theme.linkText}
               `,
           },
           "Twitter, Inc and other contributors",

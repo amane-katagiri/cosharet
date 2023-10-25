@@ -23,7 +23,7 @@ export const QuickDialog = (
         button(
           {
             style: `
-              color: ${theme.background};
+              color: ${theme.accentText};
               background: ${theme.accentColor};
               height: 5em;
               `,

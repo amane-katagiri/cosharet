@@ -27,23 +27,27 @@ Install link [https://cosharet.pages.dev/#text=text you want to share 😎&url=h
   - `redtriangle`
   - `rainbowflag`
 
-You can modify `theme` colors, in hex style (`#RGB`, `#RGBA`, `#RRGGBB`, `#RRGGBBAA`), some color/image functions (`rgb(...)`, `hsl(...)`, `linear-gradient(...)`, ...) or color name (`aliceblue` ...).
+You can modify `theme` colors, in hex style (`#RGB`, `#RGBA`, `#RRGGBB`, `#RRGGBBAA`), some color functions (`rgb(...)`, `hsl(...)`, ...) or color name (`aliceblue` ...). In background or accent color, you can use also some image functions (`linear-gradient(...)`, ...).
 
 #### light theme
 
-- `gflc`: foreground color (for text)
+- `gflc`: text color (general)
+- `lflc`: text color (for link)
+- `falc`: text color (for primary button)
 - `gblc`: background color
 - `cblc`: component background color
 - `sblc`: selected instance background color
-- `galc`: accent color (for link text and share button)
+- `balc`: accent background color (for primary button)
 
 #### dark theme
 
-- `gfdc`: foreground color (for text)
+- `gfdc`: text color (general)
+- `lfdc`: text color (for link)
+- `fadc`: text color (for primary button)
 - `gbdc`: background color
 - `cbdc`: component background color
 - `sbdc`: selected instance background color
-- `gadc`: accent color (for link text and share button)
+- `badc`: accent background color (for primary button)
 
 You can also pass parameters via query(`?...`).
 
