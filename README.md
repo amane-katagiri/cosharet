@@ -25,7 +25,7 @@ Install link [https://cosharet.pages.dev/#text=text you want to share 😎&url=h
   - `bluebird`
   - `greenballoon`
   - `redtriangle`
-  - `rainbow`
+  - `rainbowflag`
 
 You can modify `theme` colors, in hex style (`#RGB`, `#RGBA`, `#RRGGBB`, `#RRGGBBAA`), some color/image functions (`rgb(...)`, `hsl(...)`, `linear-gradient(...)`, ...) or color name (`aliceblue` ...).
 
