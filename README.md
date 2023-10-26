@@ -29,7 +29,7 @@ Install link [https://cosharet.pages.dev/#text=text you want to share 😎&url=h
 
 You can modify `theme` colors, in hex style (`#RGB`, `#RGBA`, `#RRGGBB`, `#RRGGBBAA`), some color functions (`rgb(...)`, `hsl(...)`, ...) or color name (`aliceblue` ...).
 
-In background or accent color, you can use also some image functions with a fallback color definiion (`linear-gradient(...) #RGB`, ...).
+In background color ( `?b?c` ), you can use also some image functions with a fallback color definition (`linear-gradient(...) #RGB`, ...).
 
 #### light theme
 
