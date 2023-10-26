@@ -98,10 +98,10 @@ export const namedThemes: {
       linkText: "darkorchid",
       accentText: "#222",
       componentBackground:
-        "linear-gradient(90deg, #ff40a0 0%, #ff4040 10%, #ffff40 30%, #40ff40 50%, #40ffff 70%, #ff40ff 90%, #ff40a0 100%)",
+        "linear-gradient(90deg, #ff40a0 0%, #ff4040 10%, #ffff40 30%, #40ff40 50%, #40ffff 70%, #ff40ff 90%, #ff40a0 100%) #eee",
       selectedItemBackground: "powderblue",
       accentColor:
-        "linear-gradient(#ff0080 0%, #ff0000 10%, #ffff00 30%, #00ff00 50%, #00ffff 70%, #ff00ff 90%, #ff0080 100%)",
+        "linear-gradient(#ff0080 0%, #ff0000 10%, #ffff00 30%, #00ff00 50%, #00ffff 70%, #ff00ff 90%, #ff0080 100%) darkorchid",
     },
     dark: {
       ...defaultTheme.dark,
@@ -109,10 +109,10 @@ export const namedThemes: {
       linkText: "lightskyblue",
       accentText: "#222",
       componentBackground:
-        "linear-gradient(90deg, #aa4075 0%, #aa4040 10%, #aaaa40 30%, #40aa40 50%, #40aaaa 70%, #aa40aa 90%, #aa4075 100%) #222",
+        "linear-gradient(90deg, #aa4075 0%, #aa4040 10%, #aaaa40 30%, #40aa40 50%, #40aaaa 70%, #aa40aa 90%, #aa4075 100%) #555",
       selectedItemBackground: "darkslateblue",
       accentColor:
-        "linear-gradient(#ff0080 0%, #ff0000 10%, #ffff00 30%, #00ff00 50%, #00ffff 70%, #ff00ff 90%, #ff0080 100%)",
+        "linear-gradient(#ff0080 0%, #ff0000 10%, #ffff00 30%, #00ff00 50%, #00ffff 70%, #ff00ff 90%, #ff0080 100%) orchid",
     },
   },
 } as const;
