@@ -35,21 +35,21 @@ In background or accent color, you can use also some image functions with a fall
 
 - `gflc`: text color (general)
 - `lflc`: text color (for link)
-- `falc`: text color (for primary button)
+- `aflc`: text color (for primary button)
 - `gblc`: background color
 - `cblc`: component background color
 - `sblc`: selected instance background color
-- `balc`: accent background color (for primary button)
+- `ablc`: accent background color (for primary button)
 
 #### dark theme
 
 - `gfdc`: text color (general)
 - `lfdc`: text color (for link)
-- `fadc`: text color (for primary button)
+- `afdc`: text color (for primary button)
 - `gbdc`: background color
 - `cbdc`: component background color
 - `sbdc`: selected instance background color
-- `badc`: accent background color (for primary button)
+- `abdc`: accent background color (for primary button)
 
 You can also pass parameters via query(`?...`).
 
