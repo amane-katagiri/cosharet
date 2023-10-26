@@ -27,7 +27,9 @@ Install link [https://cosharet.pages.dev/#text=text you want to share 😎&url=h
   - `redtriangle`
   - `rainbowflag`
 
-You can modify `theme` colors, in hex style (`#RGB`, `#RGBA`, `#RRGGBB`, `#RRGGBBAA`), some color functions (`rgb(...)`, `hsl(...)`, ...) or color name (`aliceblue` ...). In background or accent color, you can use also some image functions (`linear-gradient(...)`, ...).
+You can modify `theme` colors, in hex style (`#RGB`, `#RGBA`, `#RRGGBB`, `#RRGGBBAA`), some color functions (`rgb(...)`, `hsl(...)`, ...) or color name (`aliceblue` ...).
+
+In background or accent color, you can use also some image functions with a fallback color definiion (`linear-gradient(...) #RGB`, ...).
 
 #### light theme
 

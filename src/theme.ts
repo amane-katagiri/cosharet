@@ -18,7 +18,9 @@ const isColor = (colorLike: unknown) =>
   );
 const isImage = (colorLike: unknown) =>
   typeof colorLike === "string" &&
-  colorLike.match(/^(((repeat-)?(linear|conic|radial)-gradient)\(.+\))$/);
+  colorLike.match(
+    /^(((repeat-)?(linear|conic|radial)-gradient)\(.+\)) +(#[0-9a-f]{3}|#[0-9a-f]{4}|#[0-9a-f]{6}|#[0-9a-f]{8}|[a-zA-Z]+|((rgba?|hsla?)\(.+\)))$/,
+  );
 
 export const parseColorTheme = (
   themeLike: Record<string, string>,
