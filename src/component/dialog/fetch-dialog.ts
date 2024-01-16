@@ -97,6 +97,7 @@ export const FetchDialog = (
           { name: "Facebook", domain: "facebook.com" },
           { name: "LINE", domain: "line.me" },
           { name: "はてなブックマーク", domain: "b.hatena.ne.jp" },
+          { name: "Wayback Machine", domain: "web.archive.org" },
         ].map((s) =>
           div(
             button(

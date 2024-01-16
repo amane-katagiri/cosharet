@@ -5,6 +5,7 @@ import * as twitter from "./twitter";
 import * as hatenabookmark from "./hatenabookmark";
 import * as facebook from "./facebook";
 import * as line from "./line";
+import * as wayback from "./wayback";
 
 import { z } from "zod";
 
@@ -15,6 +16,7 @@ const INSTANCES = [
   "hatenabookmark",
   "facebook",
   "line",
+  "wayback",
 ] as const;
 
 export type Instance<T extends string = string> = {
@@ -59,6 +61,7 @@ const classifiers: { [k in InstanceType]: Classifier<k> } = {
   hatenabookmark: hatenabookmark.classify,
   facebook: facebook.classify,
   line: line.classify,
+  wayback: wayback.classify,
 };
 const generators: { [k in InstanceType]: Generator } = {
   mastodon: mastodon.generate,
@@ -67,6 +70,7 @@ const generators: { [k in InstanceType]: Generator } = {
   hatenabookmark: hatenabookmark.generate,
   facebook: facebook.generate,
   line: line.generate,
+  wayback: wayback.generate,
 };
 
 export const classify = (domain: string) =>
