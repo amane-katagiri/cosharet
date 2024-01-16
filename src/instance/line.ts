@@ -27,7 +27,9 @@ export const generate: Generator = (
   if (instance.type !== "line") {
     return null;
   }
-  return `https://social-plugins.${
-    instance.url
-  }/lineit/share?url=${encodeURIComponent(content.url ?? "")}`;
+  return {
+    href: `https://social-plugins.${
+      instance.url
+    }/lineit/share?url=${encodeURIComponent(content.url ?? "")}`,
+  };
 };

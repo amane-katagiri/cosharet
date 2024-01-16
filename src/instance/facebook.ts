@@ -27,7 +27,9 @@ export const generate: Generator = (
   if (instance.type !== "facebook") {
     return null;
   }
-  return `https://${instance.url}/sharer/sharer.php?u=${encodeURIComponent(
-    content.url ?? "",
-  )}`;
+  return {
+    href: `https://${instance.url}/sharer/sharer.php?u=${encodeURIComponent(
+      content.url ?? "",
+    )}`,
+  };
 };

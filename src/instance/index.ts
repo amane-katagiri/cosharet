@@ -47,7 +47,10 @@ export type Classifier<T extends string> = (
 export type Generator = (
   instance: Instance,
   content: Params["content"],
-) => string | null;
+) =>
+  | { href: string; action?: null }
+  | { href?: null; action: () => void }
+  | null;
 
 const classifiers: { [k in InstanceType]: Classifier<k> } = {
   mastodon: mastodon.classify,

@@ -73,7 +73,7 @@ const addApp = (id: string) => {
     clearState(["instances"]);
   };
   const share = (instance: Instance) => {
-    const href = generate(instance, {
+    const generated = generate(instance, {
       ...content,
       hashtags: `${content.hashtags ?? ""}${
         isAppendHashtag.val
@@ -85,11 +85,15 @@ const addApp = (id: string) => {
           : ""
       }`,
     });
-    if (href == null) {
+    if (generated == null) {
       return;
     }
     updateInstance(instance);
-    location.href = href;
+    if (typeof generated.href === "string") {
+      location.href = generated.href;
+      return;
+    }
+    generated.action();
   };
 
   if (isQuickShareMode.val && instances.val.length !== 0 && body != null) {

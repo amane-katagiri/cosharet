@@ -47,6 +47,6 @@ export const generate: Generator = (
   }
   const text = buildShareText(content);
   return text != null
-    ? `https://${instance.url}/share?text=${encodeURIComponent(text)}`
+    ? { href: `https://${instance.url}/share?text=${encodeURIComponent(text)}` }
     : null;
 };

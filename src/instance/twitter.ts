@@ -27,9 +27,11 @@ export const generate: Generator = (
   if (instance.type !== "twitter") {
     return null;
   }
-  return `https://${instance.url}/intent/tweet/?text=${encodeURIComponent(
-    content.text ?? "",
-  )}&url=${encodeURIComponent(content.url ?? "")}&hashtags=${encodeURIComponent(
-    content.hashtags ?? "",
-  )}`;
+  return {
+    href: `https://${instance.url}/intent/tweet/?text=${encodeURIComponent(
+      content.text ?? "",
+    )}&url=${encodeURIComponent(
+      content.url ?? "",
+    )}&hashtags=${encodeURIComponent(content.hashtags ?? "")}`,
+  };
 };

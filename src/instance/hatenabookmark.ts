@@ -29,5 +29,5 @@ export const generate: Generator = (
   if (instance.type !== "hatenabookmark") {
     return null;
   }
-  return `https://${instance.url}/entry/${content.url}`;
+  return { href: `https://${instance.url}/entry/${content.url}` };
 };
