@@ -20,7 +20,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2",
-    "vite": "^4.4.12"
+    "vite": "^4.5.2"
   },
   "dependencies": {
     "@hi18n/core": "^0.1.10",
