@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Instance, InstanceSchema } from "./instance";
+import { type Instance, InstanceSchema } from "./instance";
 import { defaultInstances } from "./config/instances";
 
 const INSTAKCES_KEY = "instances";
@@ -12,14 +12,14 @@ type StateKey =
   | typeof APPEND_HASHTAG
   | typeof QUICK_SHARE_MODE
   | typeof SHOW_INSTANCE_NAME;
-type State = {
+interface State {
   [INSTAKCES_KEY]?: Instance[] | null;
   [APPEND_HASHTAG]?: boolean | null;
   [QUICK_SHARE_MODE]?: boolean | null;
   [SHOW_INSTANCE_NAME]?: boolean | null;
-};
+}
 
-export const updateState = (state: State) => {
+export const updateState = (state: State): void => {
   if (state.instances != null) {
     localStorage.setItem(INSTAKCES_KEY, JSON.stringify(state.instances));
   }
@@ -40,9 +40,9 @@ export const updateState = (state: State) => {
   }
 };
 
-const jsonSafeParse = <T>(text: string, fallback: T): any => {
+const jsonSafeParse = <T>(text: string, fallback: T): T => {
   try {
-    return JSON.parse(text);
+    return JSON.parse(text) as T;
   } catch {
     return fallback;
   }
@@ -69,7 +69,7 @@ export const restoreState = (): State | null => {
   };
 };
 
-export const clearState = (keys: StateKey[]) => {
+export const clearState = (keys: StateKey[]): void => {
   if (keys.includes("instances")) {
     localStorage.setItem(INSTAKCES_KEY, JSON.stringify(defaultInstances));
   }

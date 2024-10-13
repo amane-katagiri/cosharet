@@ -1,11 +1,12 @@
-import { Classifier, Generator, Instance } from ".";
-import { Params } from "../params";
+import type { Classifier, Generator, Instance } from ".";
+import type { Params } from "../params";
 import { getTranslator } from "../locale";
 
 const { t } = getTranslator();
 
-/** @package */
-export const classify: Classifier<"twitter"> = async (domain: string) => {
+export const classify: Classifier<"twitter"> = (
+  domain: string,
+): { status: true; instance: Instance<"twitter"> } => {
   if (["twitter.com", "x.com"].includes(domain)) {
     return {
       status: true,
@@ -19,7 +20,6 @@ export const classify: Classifier<"twitter"> = async (domain: string) => {
   throw new Error(t("alert/unknown_instance"));
 };
 
-/** @package */
 export const generate: Generator = (
   instance: Instance,
   content: Params["content"],

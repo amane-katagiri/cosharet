@@ -1,8 +1,8 @@
 import van from "vanjs-core";
 import { Dialog } from ".";
 import { ShareContent } from "../share-content";
-import { Theme } from "../../theme";
-import { Instance } from "../../instance";
+import type { Theme } from "../../theme";
+import type { Instance } from "../../instance";
 import { getTranslator } from "../../locale";
 
 const { t } = getTranslator();
@@ -14,7 +14,7 @@ export const QuickDialog = (
   content: string,
   instance: Instance,
   theme: Theme,
-) =>
+): void => {
   Dialog(
     import.meta.env.VITE_APP_TITLE,
     () => {
@@ -35,3 +35,4 @@ export const QuickDialog = (
     },
     theme,
   );
+};

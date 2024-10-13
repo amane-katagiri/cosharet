@@ -1,4 +1,4 @@
-import { Params } from "../params";
+import type { Params } from "../params";
 import * as mastodon from "./mastodon";
 import * as misskey from "./misskey";
 import * as twitter from "./twitter";
@@ -9,29 +9,30 @@ import * as wayback from "./wayback";
 
 import { z } from "zod";
 
-const INSTANCES = [
-  "mastodon",
-  "misskey",
-  "twitter",
-  "hatenabookmark",
-  "facebook",
-  "line",
-  "wayback",
-] as const;
+export type InstanceType =
+  | "mastodon"
+  | "misskey"
+  | "twitter"
+  | "hatenabookmark"
+  | "facebook"
+  | "line"
+  | "wayback";
 
-export type Instance<T extends string = string> = {
+export interface Instance<T extends string = string> {
   type: T;
   url: string;
   name?: string | null;
   q?: number | null;
-};
-export const getInstanceKey = (instance: Instance) =>
-  `${instance.type}-${instance.url}`;
-export const sortInstance = (a: Instance, b: Instance) =>
+}
+export const getInstanceKey = (
+  instance: Instance | undefined | null,
+): string | null =>
+  instance != null ? `${instance.type}-${instance.url}` : null;
+export const sortInstance = (a: Instance, b: Instance): number =>
   (b.q ?? 0) - (a.q ?? 0);
 const schemaForType =
   <T>() =>
-  <S extends z.ZodType<T, any, any>>(arg: S) => {
+  <S extends z.ZodType<T>>(arg: S) => {
     return arg;
   };
 export const InstanceSchema = schemaForType<Instance>()(
@@ -42,10 +43,11 @@ export const InstanceSchema = schemaForType<Instance>()(
     q: z.number().nullish(),
   }),
 );
-export type InstanceType = (typeof INSTANCES)[number];
 export type Classifier<T extends string> = (
   domain: string,
-) => Promise<{ status: true; instance: Instance<T> }>;
+) =>
+  | Promise<{ status: true; instance: Instance<T> }>
+  | { status: true; instance: Instance<T> };
 export type Generator = (
   instance: Instance,
   content: Params["content"],
@@ -73,9 +75,29 @@ const generators: { [k in InstanceType]: Generator } = {
   wayback: wayback.generate,
 };
 
-export const classify = (domain: string) =>
-  Promise.any(Object.values(classifiers).map((c) => c(domain)));
-export const generate = (instance: Instance, content: Params["content"]) =>
+export const classify = async (
+  domain: string,
+): Promise<{
+  status: true;
+  instance: Instance;
+}> =>
+  await Promise.any(
+    Object.values(classifiers).map(async (c) => await c(domain)),
+  );
+export const generate = (
+  instance: Instance,
+  content: Params["content"],
+):
+  | {
+      href: string;
+      action?: null;
+    }
+  | {
+      href?: null;
+      action: () => void;
+    }
+  | null =>
   Object.values(generators)
     .map((g) => g(instance, content))
-    .filter((item) => item != null)[0] ?? null;
+    .filter((item) => item != null)
+    .at(0) ?? null;

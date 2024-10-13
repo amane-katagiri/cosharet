@@ -1,6 +1,6 @@
-import { Instance, getInstanceKey } from "../instance";
+import { type Instance, getInstanceKey } from "../instance";
 import van from "vanjs-core";
-import { Theme } from "../theme";
+import type { Theme } from "../theme";
 import emoji_274c from "../emoji/274c.svg";
 import { getTranslator } from "../locale";
 
@@ -28,7 +28,7 @@ export const InstanceList = (params: {
   onClickShare: (instance: Instance) => void;
   onClickRemove: (instance: Instance) => void;
   theme: Theme;
-}) => {
+}): HTMLDivElement[] => {
   const {
     instances,
     selectedInstanceKey,
@@ -49,7 +49,9 @@ export const InstanceList = (params: {
               user-select: none;
               ${selected ? `background: ${theme.selectedItemBackground}` : ""};
               `,
-            onclick: () => onClickItem(instance),
+            onclick: () => {
+              onClickItem(instance);
+            },
           },
           [
             () =>
@@ -86,8 +88,8 @@ export const InstanceList = (params: {
                       `,
                   },
                   isShownInstanceName
-                    ? instance.name ??
-                        span({ style: "font-style: italic" }, instance.url)
+                    ? (instance.name ??
+                        span({ style: "font-style: italic" }, instance.url))
                     : instance.url,
                 ),
               ),
@@ -95,7 +97,9 @@ export const InstanceList = (params: {
               selected && !isContentEmpty
                 ? button(
                     {
-                      onclick: () => onClickShare(instance),
+                      onclick: () => {
+                        onClickShare(instance);
+                      },
                       style: `
                         color: ${theme.accentText};
                         background: ${theme.accentColor};
@@ -109,10 +113,12 @@ export const InstanceList = (params: {
           ],
         );
       })
-    : div(
-        {
-          style: itemStyle,
-        },
-        t("page/share/no_instance"),
-      );
+    : [
+        div(
+          {
+            style: itemStyle,
+          },
+          t("page/share/no_instance"),
+        ),
+      ];
 };

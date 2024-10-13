@@ -1,4 +1,4 @@
-import { Instance } from "../instance/index.js";
+import type { Instance } from "../instance/index.js";
 
 export const defaultInstances: Instance[] = [
   { type: "mastodon", url: "fedibird.com" },

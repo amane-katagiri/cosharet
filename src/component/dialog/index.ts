@@ -1,6 +1,6 @@
-import van, { ChildDom } from "vanjs-core";
+import van, { type ChildDom } from "vanjs-core";
 import { Modal } from "vanjs-ui";
-import { Theme } from "../../theme";
+import type { Theme } from "../../theme";
 import emoji_274c from "../../emoji/274c.svg";
 
 const { div, button, img } = van.tags;
@@ -10,7 +10,7 @@ export const MODAL_DIALOG_CLASS_NAME = "modalDialog";
 /** @package */
 export const MODAL_DIALOG_AUTOFOCUS_CLASS_NAME = "modalDialogAutofocusItem";
 
-export const autoFocus = () => {
+export const autoFocus = (): void => {
   (
     document.querySelector<HTMLElement>(
       `.${MODAL_DIALOG_AUTOFOCUS_CLASS_NAME}`,
@@ -23,7 +23,7 @@ const DialogComponent = (
   title: string,
   children: (close: () => void) => ChildDom[],
   theme: Theme,
-) => {
+): (() => HTMLDivElement | null) => {
   const closed = van.state(false);
 
   return Modal(
@@ -39,8 +39,8 @@ const DialogComponent = (
           color: ${theme.text};
           outline: none;
           `,
-        onkeydown: (e) => {
-          if (e?.key === "Escape") {
+        onkeydown: (e: { key?: string }) => {
+          if (e.key === "Escape") {
             closed.val = true;
           }
         },
@@ -84,6 +84,6 @@ export const Dialog = (
   title: string,
   children: (close: () => void) => ChildDom[],
   theme: Theme,
-) => {
+): void => {
   van.add(document.body, DialogComponent(title, children, theme));
 };

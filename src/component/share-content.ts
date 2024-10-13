@@ -1,9 +1,9 @@
 import van from "vanjs-core";
 import emoji_1f4cb from "../emoji/1f4cb.svg";
-import { Theme } from "../theme";
-import { Instance } from "../instance";
-const { div, img, span } = van.tags;
+import type { Theme } from "../theme";
+import type { Instance } from "../instance";
 import { getTranslator } from "../locale";
+const { div, img, span } = van.tags;
 
 const { t } = getTranslator();
 
@@ -11,7 +11,7 @@ export const ShareContent = (
   content: string,
   instance: Instance | null,
   theme: Theme,
-) =>
+): HTMLDivElement =>
   div(
     {
       style: `

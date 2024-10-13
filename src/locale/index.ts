@@ -1,7 +1,13 @@
-import { Book, Message, getTranslator as _getTranslator } from "@hi18n/core";
+import {
+  Book,
+  type Message,
+  type TranslatorObject,
+  getTranslator as _getTranslator,
+} from "@hi18n/core";
 import catalogJa from "./ja";
 import catalogEn from "./en";
 
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type Vocabulary = {
   "alert/network_error": Message;
   "alert/unknown_instance": Message;
@@ -40,7 +46,7 @@ export const book = new Book<Vocabulary>({
 });
 
 const lang = window.navigator.language;
-export const getTranslator = () =>
+export const getTranslator = (): TranslatorObject<Vocabulary> =>
   _getTranslator(
     book,
     Object.keys(book.catalogs).includes(lang)

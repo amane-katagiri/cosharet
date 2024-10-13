@@ -1,7 +1,7 @@
-import van, { State } from "vanjs-core";
+import van, { type State } from "vanjs-core";
 import { Dialog } from ".";
-import { Theme } from "../../theme";
-import { Instance, InstanceType, classify } from "../../instance";
+import type { Theme } from "../../theme";
+import { type Instance, type InstanceType, classify } from "../../instance";
 import { Bookmarklet } from "../bookmarklet";
 import { getTranslator } from "../../locale";
 
@@ -13,13 +13,14 @@ const ConfigFlagItem = (
   description: string,
   value: boolean,
   onchange?: (checked: boolean) => void,
-) =>
+): HTMLDivElement =>
   div(
     label(
       { class: onchange == null ? "disabled" : "" },
       input({
         type: "checkbox",
-        onchange: (e) => onchange?.(e.target.checked),
+        onchange: (e: { target: { checked: boolean } }) =>
+          onchange?.(e.target.checked),
         checked: value,
         disabled: onchange == null,
       }),
@@ -29,8 +30,10 @@ const ConfigFlagItem = (
 
 export const ConfigDialog = (
   instances: Instance[],
-  clearInstance: () => void,
-  updateInstance: (instance: Instance) => void,
+  action: {
+    clearInstance: () => void;
+    updateInstance: (instance: Instance) => void;
+  },
   state: {
     isAppendHashtag: State<boolean> | boolean;
     setAppendHashtagFlag: (checked: boolean) => void;
@@ -40,7 +43,7 @@ export const ConfigDialog = (
     setQuickShareModeFlag: (checked: boolean) => void;
   },
   theme: Theme,
-) => {
+): void => {
   const fetcherIsLoading = van.state(false);
 
   Dialog(
@@ -67,36 +70,36 @@ export const ConfigDialog = (
         button(
           {
             disabled: fetcherIsLoading,
-            onclick: async () => {
-              try {
-                fetcherIsLoading.val = true;
-                (
-                  await Promise.all(
-                    instances.map(async (instance) => {
-                      try {
-                        const newInstance = (await classify(instance.url))
-                          .instance;
-                        if (newInstance.name != null) {
-                          return newInstance;
-                        }
-                      } catch (e) {
-                        console.error(e);
-                      }
-                      return null;
-                    }),
-                  )
+            onclick: () => {
+              fetcherIsLoading.val = true;
+              Promise.all(
+                instances.map(async (instance) => {
+                  try {
+                    const newInstance = (await classify(instance.url)).instance;
+                    if (newInstance.name != null) {
+                      return newInstance;
+                    }
+                  } catch (e) {
+                    console.error(e);
+                  }
+                  return null;
+                }),
+              )
+                .then((result) =>
+                  result
+                    .filter(
+                      (instance): instance is Instance<InstanceType> =>
+                        instance != null,
+                    )
+                    .map(action.updateInstance),
                 )
-                  .filter(
-                    (instance): instance is Instance<InstanceType> =>
-                      instance != null,
-                  )
-                  .map((instance) => updateInstance(instance));
-              } catch (e) {
-                console.error(e);
-              } finally {
-                fetcherIsLoading.val = false;
-                close();
-              }
+                .catch((e) => {
+                  console.error(e);
+                })
+                .finally(() => {
+                  fetcherIsLoading.val = false;
+                  close();
+                });
             },
             style: `
               color: ${theme.text};
@@ -110,7 +113,7 @@ export const ConfigDialog = (
         button(
           {
             onclick: () => {
-              clearInstance();
+              action.clearInstance();
               close();
             },
             style: `

@@ -13,12 +13,20 @@ export default tseslint.config(
   eslintPluginPrettierRecommended,
   eslintConfigPrettier,
   {
+    ignores: ["dist/*"],
+  },
+  {
+    files: ["**/*.js", "**/*.cjs"],
+    extends: [tseslint.configs.disableTypeChecked],
+  },
+  {
     plugins: {
-      jsdoc: jsdoc,
+      jsdoc,
     },
     rules: {
       "jsdoc/require-description": "error",
       "jsdoc/check-values": "error",
+      "@typescript-eslint/no-magic-numbers": "off",
     },
     languageOptions: {
       ecmaVersion: "latest",

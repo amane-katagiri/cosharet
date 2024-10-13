@@ -1,14 +1,14 @@
-import { Theme, parseColorTheme } from "./theme";
-import { ThemeKey, defaultTheme, namedThemes } from "./config/theme";
+import { type Theme, parseColorTheme } from "./theme";
+import { type ThemeKey, namedThemeKeys, namedThemes } from "./config/theme";
 
-export type Params = {
+export interface Params {
   content: {
     text: string | null;
     url: string | null;
     hashtags: string | null;
   };
   theme: Theme;
-};
+}
 
 export const buildShareText = (content: Params["content"]): string | null => {
   const body = [
@@ -17,13 +17,13 @@ export const buildShareText = (content: Params["content"]): string | null => {
       content.url,
       content.hashtags
         ?.split(",")
-        .filter((h) => h !== "" && !h.match(/[ #]/))
+        .filter((h) => h !== "" && h.match(/[ #]/) == null)
         .map((h) => `#${h}`)
-        ?.join(" "),
+        .join(" "),
     ].filter((item) => item != null && item !== ""),
     "",
   ].join(" ");
-  return (body?.length ?? 0) !== 0 ? body : null;
+  return body !== "" ? body : null;
 };
 
 const buildParams = (params: {
@@ -39,7 +39,11 @@ const buildParams = (params: {
   };
 }): Params => {
   const namedTheme =
-    namedThemes[(params.theme.key as ThemeKey) ?? "default"] ?? defaultTheme;
+    namedThemes[
+      namedThemeKeys.includes(params.theme.key as ThemeKey)
+        ? ((params.theme.key ?? "default") as ThemeKey)
+        : "default"
+    ];
   const theme = window.matchMedia("(prefers-color-scheme: dark)").matches
     ? parseColorTheme(params.theme.dark, namedTheme.dark)
     : parseColorTheme(params.theme.light, namedTheme.light);

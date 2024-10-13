@@ -1,4 +1,9 @@
-import { Instance, generate, getInstanceKey, sortInstance } from "./instance";
+import {
+  type Instance,
+  generate,
+  getInstanceKey,
+  sortInstance,
+} from "./instance";
 import "./css/main.css";
 import { buildShareText, parseUrlParams } from "./params";
 import { updateState, restoreState, clearState } from "./state";
@@ -19,7 +24,7 @@ const { t } = getTranslator();
 
 const { div, button, img, hr } = van.tags;
 
-const addApp = (id: string) => {
+const addApp = (id: string): void => {
   const state = restoreState();
   const instances = van.state(state?.instances?.sort(sortInstance) ?? []);
   const isAppendHashtag = van.state(state?.appendHashtag ?? false);
@@ -27,7 +32,7 @@ const addApp = (id: string) => {
   const isShownInstanceName = van.state(state?.showInstanceName ?? false);
 
   const selectedInstanceKey = van.state<string | null>(
-    instances.val.length !== 0 ? getInstanceKey(instances.val[0]) : null,
+    getInstanceKey(instances.val.at(0)),
   );
 
   const { content, theme } = parseUrlParams(
@@ -39,18 +44,21 @@ const addApp = (id: string) => {
   );
   const body = buildShareText(content);
 
-  const addInstance = (instance: Instance, q?: number) => {
+  const addInstance = (instance: Instance, q?: number): void => {
+    const MINIMUM_Q = 0;
     instances.val = [
       {
         ...instance,
-        q: q ?? Math.max(...[0], ...instances.val.map((d) => d.q ?? 0)),
+        q:
+          q ??
+          Math.max(MINIMUM_Q, ...instances.val.map((d) => d.q ?? MINIMUM_Q)),
       },
       ...instances.val.filter((v) => v.url !== instance.url),
     ].sort(sortInstance);
     updateState({ instances: instances.val });
   };
-  const updateInstance = (instance: Instance, qIncrement: number = 1) => {
-    const newInstance = { ...instance, q: (instance.q ?? 0) + qIncrement };
+  const updateInstance = (instance: Instance): void => {
+    const newInstance = { ...instance };
     const oldInstances = [...instances.val];
     oldInstances.forEach((instance, index, instances) => {
       if (instance.url === newInstance.url) {
@@ -60,19 +68,19 @@ const addApp = (id: string) => {
     instances.val = oldInstances.sort(sortInstance);
     updateState({ instances: instances.val });
   };
-  const removeInstance = (instance: Instance) => {
+  const removeInstance = (instance: Instance): void => {
     instances.val = instances.val.filter(
       (v) => v.url !== instance.url || v.type !== instance.type,
     );
     selectedInstanceKey.val = null;
     updateState({ instances: instances.val });
   };
-  const clearInstance = () => {
+  const clearInstance = (): void => {
     selectedInstanceKey.val = null;
     instances.val = [...defaultInstances];
     clearState(["instances"]);
   };
-  const share = (instance: Instance) => {
+  const share = (instance: Instance): void => {
     const generated = generate(instance, {
       ...content,
       hashtags: `${content.hashtags ?? ""}${
@@ -80,15 +88,15 @@ const addApp = (id: string) => {
           ? content.hashtags == null || content.hashtags.length === 0
             ? import.meta.env.VITE_APP_HASHTAG
             : !content.hashtags.includes(import.meta.env.VITE_APP_HASHTAG)
-            ? `,${import.meta.env.VITE_APP_HASHTAG}`
-            : ""
+              ? `,${import.meta.env.VITE_APP_HASHTAG}`
+              : ""
           : ""
       }`,
     });
     if (generated == null) {
       return;
     }
-    updateInstance(instance);
+    updateInstance({ ...instance, q: (instance.q ?? 0) + 1 });
     if (typeof generated.href === "string") {
       location.href = generated.href;
       return;
@@ -97,7 +105,14 @@ const addApp = (id: string) => {
   };
 
   if (isQuickShareMode.val && instances.val.length !== 0 && body != null) {
-    QuickDialog(() => share(instances.val[0]), body, instances.val[0], theme);
+    QuickDialog(
+      () => {
+        share(instances.val[0]);
+      },
+      body,
+      instances.val[0],
+      theme,
+    );
     autoFocus();
   }
 
@@ -199,8 +214,10 @@ const addApp = (id: string) => {
                   onclick: () => {
                     ConfigDialog(
                       instances.val,
-                      clearInstance,
-                      (instance: Instance) => updateInstance(instance, 0),
+                      {
+                        clearInstance,
+                        updateInstance,
+                      },
                       {
                         isAppendHashtag,
                         setAppendHashtagFlag: (checked) => {

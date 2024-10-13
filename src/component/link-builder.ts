@@ -1,13 +1,13 @@
 import van from "vanjs-core";
 import { namedThemeKeys } from "../config/theme";
-import { Theme } from "../theme";
+import type { Theme } from "../theme";
 import { getTranslator } from "../locale";
 
 const { t } = getTranslator();
 
 const { div, button, form, input, label, select, option } = van.tags;
 
-export const LinkBuilder = (theme: Theme) =>
+export const LinkBuilder = (theme: Theme): HTMLDivElement =>
   div(
     {
       style: `

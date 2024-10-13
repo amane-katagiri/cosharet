@@ -1,7 +1,7 @@
 import van from "vanjs-core";
-import { Instance, classify } from "../../instance";
+import { type Instance, classify } from "../../instance";
 import { Dialog, MODAL_DIALOG_AUTOFOCUS_CLASS_NAME } from ".";
-import { Theme } from "../../theme";
+import type { Theme } from "../../theme";
 import { getTranslator } from "../../locale";
 
 const { t } = getTranslator();
@@ -11,19 +11,21 @@ const { div, button, input } = van.tags;
 export const FetchDialog = (
   addInstance: (instance: Instance, q?: number) => void,
   theme: Theme,
-) => {
+): void => {
   const fetcherIsLoading = van.state(false);
   const fetcherError = van.state<string | null>(null);
   const fetcherInfo = van.state<string | null>(null);
   const fetcherInput = van.state("");
-  const onclick = async (domain: string, close: () => void) => {
+  const onclick = async (domain: string, close: () => void): Promise<void> => {
     try {
       fetcherIsLoading.val = true;
       fetcherInfo.val = t("dialog/fetch/loading_instance_info");
       addInstance((await classify(domain)).instance);
       close();
     } catch (e) {
-      fetcherError.val = String(e instanceof AggregateError ? e.errors[0] : e);
+      fetcherError.val = String(
+        e instanceof AggregateError ? e.errors.at(0) : e,
+      );
     } finally {
       fetcherInfo.val = null;
       fetcherIsLoading.val = false;
@@ -52,13 +54,13 @@ export const FetchDialog = (
         },
         input({
           value: fetcherInput,
-          oninput: (e) => {
+          oninput: (e: { target: { value: string } }) => {
             fetcherInput.val = e.target.value;
             fetcherError.val = null;
           },
-          onkeydown: (e) => {
-            if (!disabled.val && e?.key === "Enter") {
-              onclick(fetcherInput.val, close);
+          onkeydown: (e: { key?: string }) => {
+            if (!disabled.val && e.key === "Enter") {
+              void onclick(fetcherInput.val, close);
             }
           },
           type: "text",
@@ -73,7 +75,9 @@ export const FetchDialog = (
         }),
         button(
           {
-            onclick: () => onclick(fetcherInput.val, close),
+            onclick: () => {
+              void onclick(fetcherInput.val, close);
+            },
             disabled,
             style: `
               color: ${theme.text};
@@ -103,7 +107,7 @@ export const FetchDialog = (
             button(
               {
                 onclick: () => {
-                  onclick(s.domain, close);
+                  void onclick(s.domain, close);
                   fetcherInput.val = s.domain;
                 },
                 style: `

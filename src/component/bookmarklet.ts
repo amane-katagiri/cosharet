@@ -1,15 +1,19 @@
 import van from "vanjs-core";
-import { Theme } from "../theme";
-import { ThemeKey, namedThemeKeys, namedThemes } from "../config/theme";
+import type { Theme } from "../theme";
+import { type ThemeKey, namedThemeKeys, namedThemes } from "../config/theme";
 import { getTranslator } from "../locale";
 
 const { t } = getTranslator();
 
 const { a, div, select, option, label, input } = van.tags;
 
-const encode = (text: string) => encodeURIComponent(text).replace("'", "\\'");
+const encode = (text: string): string =>
+  encodeURIComponent(text).replace("'", "\\'");
 
-export const Bookmarklet = (theme: Theme, openDirect: boolean = true) => {
+export const Bookmarklet = (
+  theme: Theme,
+  openDirect = true,
+): HTMLAnchorElement => {
   const idSuffix = Math.floor(Math.random() * 2147483647);
   return a(
     {
@@ -46,7 +50,7 @@ export const Bookmarklet = (theme: Theme, openDirect: boolean = true) => {
   );
 };
 
-export const BookmarkletList = (theme: Theme) => {
+export const BookmarkletList = (theme: Theme): HTMLDivElement => {
   const isDarkMode = van.state(
     window.matchMedia("(prefers-color-scheme: dark)").matches,
   );
@@ -108,7 +112,12 @@ export const BookmarkletList = (theme: Theme) => {
               color: ${theme.text};
               background: ${theme.componentBackground};
               `,
-            onchange: (e) => (themeKey.val = e.target.value),
+            onchange: (e: { target: { value: string } }) =>
+              (themeKey.val = namedThemeKeys.includes(
+                e.target.value as ThemeKey,
+              )
+                ? (e.target.value as ThemeKey)
+                : "default"),
           },
           namedThemeKeys.map((value) =>
             option({ selected: value === themeKey.val, value }, value),
@@ -118,7 +127,7 @@ export const BookmarkletList = (theme: Theme) => {
       label(
         input({
           type: "checkbox",
-          onchange: (e) => {
+          onchange: (e: { target: { checked: boolean } }) => {
             openDirect.val = e.target.checked;
             if (e.target.checked) {
               isDarkMode.val = window.matchMedia(
@@ -133,7 +142,8 @@ export const BookmarkletList = (theme: Theme) => {
       label(
         input({
           type: "checkbox",
-          onchange: (e) => (isDarkMode.val = e.target.checked),
+          onchange: (e: { target: { checked: boolean } }) =>
+            (isDarkMode.val = e.target.checked),
           checked: isDarkMode,
           disabled: openDirect,
         }),
