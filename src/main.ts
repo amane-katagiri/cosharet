@@ -103,16 +103,13 @@ const addApp = (id: string): void => {
 
   if (isQuickShareMode.val && instances.val.length !== 0 && body != null) {
     QuickDialog(
-      () => {
-        share(instances.val[0]);
-      },
+      share;
       body,
       instances.val[0],
       theme,
     );
     autoFocus();
   }
-
   const target = document.querySelector(`#${id}`);
   if (target != null) {
     van.add(

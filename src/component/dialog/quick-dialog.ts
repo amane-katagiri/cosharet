@@ -10,7 +10,7 @@ const { t } = getTranslator();
 const { button } = van.tags;
 
 export const QuickDialog = (
-  onClickShare: () => void,
+  onClickShare: (instance: Instance) => void,
   content: string,
   instance: Instance,
   theme: Theme,
@@ -19,7 +19,11 @@ export const QuickDialog = (
     import.meta.env.VITE_APP_TITLE,
     () => {
       return [
-        ShareContent(content, instance, theme),
+        ShareContent(
+          content,
+          t("dialog/quick_share/guide", { domain: instance.url }),
+          theme,
+        ),
         button(
           {
             style: `
@@ -27,7 +31,9 @@ export const QuickDialog = (
               background: ${theme.accentColor};
               height: 5em;
               `,
-            onclick: onClickShare,
+            onclick: () => {
+              onClickShare(instance);
+            },
           },
           t("general/share"),
         ),

@@ -22,17 +22,15 @@ const itemStyle = `
 export const InstanceList = (params: {
   instances: Instance[];
   selectedInstanceKey: string | null;
-  isContentEmpty: boolean;
   isShownInstanceName: boolean;
   onClickItem: (instance: Instance) => void;
-  onClickShare: (instance: Instance) => void;
+  onClickShare?: ((instance: Instance) => void) | null;
   onClickRemove: (instance: Instance) => void;
   theme: Theme;
 }): HTMLDivElement[] => {
   const {
     instances,
     selectedInstanceKey,
-    isContentEmpty,
     isShownInstanceName,
     onClickItem,
     onClickShare,
@@ -94,7 +92,7 @@ export const InstanceList = (params: {
                 ),
               ),
             () =>
-              selected && !isContentEmpty
+              selected && onClickShare != null
                 ? button(
                     {
                       onclick: () => {
