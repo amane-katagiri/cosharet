@@ -12,12 +12,12 @@ const encode = (text: string): string =>
 
 export const Bookmarklet = (
   theme: Theme,
-  openDirect = true,
+  putShareButton = false,
 ): HTMLAnchorElement => {
   const idSuffix = Math.floor(Math.random() * 2147483647);
   return a(
     {
-      href: openDirect
+      href: !putShareButton
         ? `javascript:(function(){window.open('${location.protocol}//${
             location.host
           }/#theme=${encode(
@@ -53,7 +53,7 @@ export const BookmarkletList = (theme: Theme): HTMLDivElement => {
   const isDarkMode = van.state(
     window.matchMedia("(prefers-color-scheme: dark)").matches,
   );
-  const openDirect = van.state(true);
+  const putShareButton = van.state(false);
   const themeKey = van.state<ThemeKey>(theme.name ?? "default");
 
   return div(
@@ -84,13 +84,30 @@ export const BookmarkletList = (theme: Theme): HTMLDivElement => {
           isDarkMode.val
             ? namedThemes[themeKey.val].dark
             : namedThemes[themeKey.val].light,
-          openDirect.val,
+          putShareButton.val,
         ),
     ),
     div(
+      label(
+        input({
+          type: "checkbox",
+          onchange: (e: { target: { checked: boolean } }) => {
+            putShareButton.val = e.target.checked;
+            if (e.target.checked) {
+              isDarkMode.val = window.matchMedia(
+                "(prefers-color-scheme: dark)",
+              ).matches;
+            }
+          },
+          checked: putShareButton.val,
+        }),
+        t("page/empty/builder/enable_put_share_button"),
+      ),
+    ),
+    div(
       {
-        style: `
-          display: flex;
+        style: () => `
+          display: ${putShareButton.val ? "flex" : "none"};
           flex-wrap: wrap;
           gap: 1em;
           align-items: center;
@@ -128,25 +145,9 @@ export const BookmarkletList = (theme: Theme): HTMLDivElement => {
       label(
         input({
           type: "checkbox",
-          onchange: (e: { target: { checked: boolean } }) => {
-            openDirect.val = e.target.checked;
-            if (e.target.checked) {
-              isDarkMode.val = window.matchMedia(
-                "(prefers-color-scheme: dark)",
-              ).matches;
-            }
-          },
-          checked: openDirect.val,
-        }),
-        t("page/empty/builder/enable_open_direct"),
-      ),
-      label(
-        input({
-          type: "checkbox",
           onchange: (e: { target: { checked: boolean } }) =>
             (isDarkMode.val = e.target.checked),
           checked: isDarkMode,
-          disabled: openDirect,
         }),
         t("page/empty/builder/enable_darkmode"),
       ),

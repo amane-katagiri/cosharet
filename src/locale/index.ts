@@ -28,7 +28,7 @@ export type Vocabulary = {
   "page/empty/builder/guide": Message;
   "page/empty/builder/open_custom_link": Message;
   "page/empty/builder/enable_darkmode": Message;
-  "page/empty/builder/enable_open_direct": Message;
+  "page/empty/builder/enable_put_share_button": Message;
   "page/empty/builder/text/label": Message;
   "page/empty/instances/guide": Message;
   "page/empty/instances/customize": Message;
