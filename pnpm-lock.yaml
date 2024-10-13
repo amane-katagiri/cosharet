@@ -12,14 +12,14 @@ importers:
         specifier: ^0.1.10
         version: 0.1.10
       vanjs-core:
-        specifier: ^1.2.1
-        version: 1.2.1
+        specifier: ^1.5.2
+        version: 1.5.2
       vanjs-ui:
-        specifier: ^0.8.1
-        version: 0.8.1
+        specifier: ^0.10.1
+        version: 0.10.1
       zod:
-        specifier: ^3.22.4
-        version: 3.22.4
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
       '@hi18n/cli':
         specifier: ^0.1.11
@@ -1865,11 +1865,11 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-  vanjs-core@1.2.1:
-    resolution: {integrity: sha512-YzCu96dEAqBhZtCnU2gXOh+DRriS1G/+GSTUOkg0EIM+5lluxF88Yx8KnbljWtxUyhjIJHGRnTNS0+QbVF7Fhg==}
+  vanjs-core@1.5.2:
+    resolution: {integrity: sha512-z9MHAzxYbNFJ6MYP+4j9l9KMxDU3ryI65JjIfUbGQwF1paLfiuqtIiq9Ve1UGKLd774Z7mtdWzd+/FR785dKjQ==}
 
-  vanjs-ui@0.8.1:
-    resolution: {integrity: sha512-uDsMCtF2byaHBgTSu/QJ4RFS5u5LIsaybWloFGdGv9ZGrvYk5BJDQjsbGC9DnHWJBdtIskx7H+66JdBh+LAa6Q==}
+  vanjs-ui@0.10.1:
+    resolution: {integrity: sha512-4cqDeW5xcUKNAz4L1yxNHec+I098by0YF+PSy204K4d2nIyPA1yKI0x0V1BuTxj2UU16oxEsLo/bkjlXfQLlxw==}
 
   vite@5.4.8:
     resolution: {integrity: sha512-FqrItQ4DT1NC4zCUqMB4c4AZORMKIa0m8/URVCZ77OZ/QSNeJ54bU1vrFADbDsuwfIPcgknRkmqakQcgnL4GiQ==}
@@ -1935,8 +1935,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
 snapshots:
 
@@ -4014,11 +4014,11 @@ snapshots:
     dependencies:
       punycode: 2.3.0
 
-  vanjs-core@1.2.1: {}
+  vanjs-core@1.5.2: {}
 
-  vanjs-ui@0.8.1:
+  vanjs-ui@0.10.1:
     dependencies:
-      vanjs-core: 1.2.1
+      vanjs-core: 1.5.2
 
   vite@5.4.8:
     dependencies:
@@ -4066,4 +4066,4 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod@3.22.4: {}
+  zod@3.23.8: {}

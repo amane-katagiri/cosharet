@@ -216,17 +216,17 @@ const addApp = (id: string): void => {
                         updateInstance,
                       },
                       {
-                        isAppendHashtag,
+                        isAppendHashtag: isAppendHashtag.val,
                         setAppendHashtagFlag: (checked) => {
                           isAppendHashtag.val = checked;
                           updateState({ appendHashtag: checked });
                         },
-                        isQuickShareMode,
+                        isQuickShareMode: isQuickShareMode.val,
                         setQuickShareModeFlag: (checked) => {
                           isQuickShareMode.val = checked;
                           updateState({ quickShareMode: checked });
                         },
-                        isShownInstanceName,
+                        isShownInstanceName: isShownInstanceName.val,
                         setShowInstanceNameFlag: (checked) => {
                           isShownInstanceName.val = checked;
                           updateState({ showInstanceName: checked });

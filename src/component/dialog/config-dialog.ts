@@ -1,4 +1,4 @@
-import van, { type State } from "vanjs-core";
+import van from "vanjs-core";
 import { Dialog } from ".";
 import type { Theme } from "../../theme";
 import { type Instance, type InstanceType, classify } from "../../instance";
@@ -35,11 +35,11 @@ export const ConfigDialog = (
     updateInstance: (instance: Instance) => void;
   },
   state: {
-    isAppendHashtag: State<boolean> | boolean;
+    isAppendHashtag: boolean;
     setAppendHashtagFlag: (checked: boolean) => void;
-    isShownInstanceName: State<boolean> | boolean;
+    isShownInstanceName: boolean;
     setShowInstanceNameFlag: (checked: boolean) => void;
-    isQuickShareMode: State<boolean> | boolean;
+    isQuickShareMode: boolean;
     setQuickShareModeFlag: (checked: boolean) => void;
   },
   theme: Theme,
@@ -51,19 +51,19 @@ export const ConfigDialog = (
     (close) => [
       ConfigFlagItem(
         t("dialog/config/enable_quick_share"),
-        van.val(state.isQuickShareMode),
+        state.isQuickShareMode,
         state.setQuickShareModeFlag,
       ),
       ConfigFlagItem(
         t("dialog/config/show_instance_name"),
-        van.val(state.isShownInstanceName),
+        state.isShownInstanceName,
         state.setShowInstanceNameFlag,
       ),
       ConfigFlagItem(
         t("dialog/config/append_app_hashtag", {
           appHashTag: import.meta.env.VITE_APP_HASHTAG,
         }),
-        van.val(state.isAppendHashtag),
+        state.isAppendHashtag,
         state.setAppendHashtagFlag,
       ),
       div(
