@@ -41,6 +41,9 @@ export default new Catalog<Vocabulary>("ja", {
   "page/empty/instances/guide": msg(
     "このブラウザでは、以下のインスタンスを利用できます。",
   ),
+  "page/empty/instances/customize": msg("その他の設定"),
+  "page/empty/tabs/bookmarklet": msg("つかう"),
+  "page/empty/tabs/builder": msg("つくる"),
   "page/share/no_instance": msg("利用できるインスタンスはありません。"),
   "page/share/add_new_instance": msg("新しいインスタンスを追加する"),
   "page/share/guide": msg("お好きなSNSで以下の内容をシェアできます。"),

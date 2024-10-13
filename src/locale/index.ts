@@ -31,6 +31,9 @@ export type Vocabulary = {
   "page/empty/builder/enable_open_direct": Message;
   "page/empty/builder/text/label": Message;
   "page/empty/instances/guide": Message;
+  "page/empty/instances/customize": Message;
+  "page/empty/tabs/bookmarklet": Message;
+  "page/empty/tabs/builder": Message;
   "page/share/no_instance": Message;
   "page/share/add_new_instance": Message;
   "page/share/guide": Message;

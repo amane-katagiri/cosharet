@@ -38,6 +38,9 @@ export default new Catalog<Vocabulary>("en", {
   "page/empty/instances/guide": msg(
     "These are available instances in this browser.",
   ),
+  "page/empty/instances/customize": msg("Customize"),
+  "page/empty/tabs/bookmarklet": msg("Bookmarklet"),
+  "page/empty/tabs/builder": msg("Builder"),
   "page/share/no_instance": msg("There is no available instance."),
   "page/share/add_new_instance": msg("Add a new instance"),
   "page/share/guide": msg("Share this content on your favorite SNS."),
