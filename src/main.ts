@@ -45,13 +45,10 @@ const addApp = (id: string): void => {
   const body = buildShareText(content);
 
   const addInstance = (instance: Instance, q?: number): void => {
-    const MINIMUM_Q = 0;
     instances.val = [
       {
         ...instance,
-        q:
-          q ??
-          Math.max(MINIMUM_Q, ...instances.val.map((d) => d.q ?? MINIMUM_Q)),
+        q: q ?? Math.max(0, ...instances.val.map((d) => d.q ?? 0)),
       },
       ...instances.val.filter((v) => v.url !== instance.url),
     ].sort(sortInstance);
