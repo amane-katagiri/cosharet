@@ -26,7 +26,7 @@ export default new Catalog<Vocabulary>("en", {
     "Or add the following non-fediverse services.",
   ),
   "dialog/quick_share/guide": msg("Share this content with {domain}."),
-  "page/empty/bookmarklet/guide": msg("Or need a bookmarklet?"),
+  "page/empty/bookmarklet/guide": msg("Add a bookmarklet to share URL."),
   "page/empty/bookmarklet/alert/guide": msg(
     "Drag and drop this link to your bookmark bar.",
   ),

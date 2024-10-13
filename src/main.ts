@@ -22,19 +22,10 @@ import { getTranslator } from "./locale";
 
 const { t } = getTranslator();
 
-const { div, button, img, hr } = van.tags;
+const { div, button, img } = van.tags;
 
 const addApp = (id: string): void => {
-  const state = restoreState();
-  const instances = van.state(state?.instances?.sort(sortInstance) ?? []);
-  const isAppendHashtag = van.state(state?.appendHashtag ?? false);
-  const isQuickShareMode = van.state(state?.quickShareMode ?? false);
-  const isShownInstanceName = van.state(state?.showInstanceName ?? false);
-
-  const selectedInstanceKey = van.state<string | null>(
-    getInstanceKey(instances.val.at(0)),
-  );
-
+  /** init params */
   const { content, theme } = parseUrlParams(
     new URLSearchParams(
       document.location.hash !== ""
@@ -42,8 +33,23 @@ const addApp = (id: string): void => {
         : document.location.search,
     ),
   );
-  const body = buildShareText(content);
+  const shareContent = buildShareText(content);
+  const state = restoreState();
 
+  /** vanjs states */
+  const instances = van.state(state?.instances?.sort(sortInstance) ?? []);
+  const isAppendHashtag = van.state(state?.appendHashtag ?? false);
+  const isQuickShareMode = van.state(state?.quickShareMode ?? false);
+  const isShownInstanceName = van.state(state?.showInstanceName ?? false);
+  const selectedInstanceKey = van.state<string | null>(
+    getInstanceKey(instances.val.at(0)),
+  );
+  const mode = van.state<"share" | "builder" | "bookmarklet" | "customize">(
+    shareContent != null ? "share" : "bookmarklet",
+  );
+  const quickInstance = van.derive(() => instances.val.at(0));
+
+  /** actions */
   const addInstance = (instance: Instance, q?: number): void => {
     instances.val = [
       {
@@ -101,19 +107,23 @@ const addApp = (id: string): void => {
     generated.action();
   };
 
-  if (isQuickShareMode.val && instances.val.length !== 0 && body != null) {
-    QuickDialog(
-      share;
-      body,
-      instances.val[0],
-      theme,
-    );
+  /** render page */
+  if (
+    isQuickShareMode.val &&
+    quickInstance.val != null &&
+    mode.val === "share" &&
+    shareContent != null
+  ) {
+    QuickDialog(share, shareContent, quickInstance.val, theme);
     autoFocus();
   }
+
+  const builder = LinkBuilder(theme);
+  const bookmarklet = BookmarkletList(theme);
+
   const target = document.querySelector(`#${id}`);
   if (target != null) {
-    van.add(
-      target,
+    van.add(target, () =>
       div(
         {
           style: `
@@ -143,101 +153,161 @@ const addApp = (id: string): void => {
                 gap: 1em;
                 `,
             },
-            body != null
-              ? ShareContent(body, null, theme)
+            mode.val === "share" && shareContent != null
+              ? ShareContent(shareContent, t("page/share/guide"), theme)
               : div(
                   {
                     style: `
                       display: flex;
-                      flex-direction: column;
                       gap: 1em;
                       `,
                   },
-                  LinkBuilder(theme),
-                  div(hr()),
-                  BookmarkletList(theme),
-                  div(hr()),
-                  t("page/empty/instances/guide"),
+                  button(
+                    {
+                      class: "tabButton",
+                      style:
+                        mode.val === "bookmarklet"
+                          ? `
+                            color: ${theme.accentText};
+                            background: ${theme.accentColor};
+                            `
+                          : `
+                            color: ${theme.text};
+                            background: ${theme.componentBackground};
+                            `,
+                      onclick: () => (mode.val = "bookmarklet"),
+                    },
+                    t("page/empty/tabs/bookmarklet"),
+                  ),
+                  button(
+                    {
+                      class: "tabButton",
+                      style:
+                        mode.val === "builder"
+                          ? `
+                            color: ${theme.accentText};
+                            background: ${theme.accentColor};
+                            `
+                          : `
+                            color: ${theme.text};
+                            background: ${theme.componentBackground};
+                            `,
+                      onclick: () => (mode.val = "builder"),
+                    },
+                    t("page/empty/tabs/builder"),
+                  ),
+                  button(
+                    {
+                      class: "imageButton",
+                      onclick: () => (mode.val = "customize"),
+                    },
+                    img({ src: emoji_2699, style: "width: 1em; height: 1em;" }),
+                  ),
                 ),
-            () =>
-              div(
-                {
-                  style: `
-                    background: ${theme.componentBackground};
-                    border-radius: 0.5em;
-                  `,
-                },
-                InstanceList({
-                  instances: instances.val,
-                  selectedInstanceKey: selectedInstanceKey.val,
-                  isContentEmpty: body == null,
-                  isShownInstanceName: isShownInstanceName.val,
-                  theme,
-                  onClickItem: (instance: Instance) => {
-                    selectedInstanceKey.val = getInstanceKey(instance);
-                  },
-                  onClickShare: share,
-                  onClickRemove: removeInstance,
-                }),
-              ),
-            div(
-              {
-                style: `
-                  display: flex;
-                  gap: 0.5em;
-                  justify-content: space-between;
-                  flex-wrap: wrap;
-                  `,
-              },
-              button(
-                {
-                  style: `
-                    color: ${theme.text};
-                    background: ${theme.componentBackground};
-                    `,
-                  onclick: () => {
-                    FetchDialog(addInstance, theme);
-                    autoFocus();
-                  },
-                },
-                t("page/share/add_new_instance"),
-              ),
-              button(
-                {
-                  class: "imageButton",
-                  onclick: () => {
-                    ConfigDialog(
-                      instances.val,
-                      {
-                        clearInstance,
-                        updateInstance,
-                      },
-                      {
-                        isAppendHashtag: isAppendHashtag.val,
-                        setAppendHashtagFlag: (checked) => {
-                          isAppendHashtag.val = checked;
-                          updateState({ appendHashtag: checked });
-                        },
-                        isQuickShareMode: isQuickShareMode.val,
-                        setQuickShareModeFlag: (checked) => {
-                          isQuickShareMode.val = checked;
-                          updateState({ quickShareMode: checked });
-                        },
-                        isShownInstanceName: isShownInstanceName.val,
-                        setShowInstanceNameFlag: (checked) => {
-                          isShownInstanceName.val = checked;
-                          updateState({ showInstanceName: checked });
-                        },
-                      },
-                      theme,
-                    );
-                    autoFocus();
-                  },
-                },
-                img({ src: emoji_2699, style: "height: 1em;" }),
-              ),
-            ),
+            mode.val === "customize"
+              ? t("page/empty/instances/guide")
+              : mode.val === "builder"
+                ? builder
+                : mode.val === "bookmarklet"
+                  ? bookmarklet
+                  : null,
           ),
+          mode.val === "share" || mode.val === "customize"
+            ? div(
+                {
+                  style: `
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1em;
+                    `,
+                },
+                div(
+                  {
+                    style: `
+                        background: ${theme.componentBackground};
+                        border-radius: 0.5em;
+                        `,
+                  },
+                  InstanceList({
+                    instances: instances.val,
+                    selectedInstanceKey: selectedInstanceKey.val,
+                    isShownInstanceName: isShownInstanceName.val,
+                    theme,
+                    onClickItem: (instance: Instance) => {
+                      selectedInstanceKey.val = getInstanceKey(instance);
+                    },
+                    onClickShare: mode.val === "share" ? share : undefined,
+                    onClickRemove: removeInstance,
+                  }),
+                ),
+                div(
+                  {
+                    style: `
+                      display: flex;
+                      gap: 0.5em;
+                      justify-content: space-between;
+                      flex-wrap: wrap;
+                      `,
+                  },
+                  button(
+                    {
+                      style: `
+                        color: ${theme.text};
+                        background: ${theme.componentBackground};
+                        `,
+                      onclick: () => {
+                        FetchDialog(addInstance, theme);
+                        autoFocus();
+                      },
+                    },
+                    t("page/share/add_new_instance"),
+                  ),
+                  button(
+                    {
+                      ...(mode.val === "share"
+                        ? { class: "imageButton" }
+                        : {
+                            style: `
+                              color: ${theme.text};
+                              background: ${theme.componentBackground};
+                              `,
+                          }),
+                      onclick: () => {
+                        ConfigDialog(
+                          instances.val,
+                          {
+                            clearInstance,
+                            updateInstance,
+                          },
+                          {
+                            isAppendHashtag: isAppendHashtag.val,
+                            setAppendHashtagFlag: (checked) => {
+                              isAppendHashtag.val = checked;
+                              updateState({ appendHashtag: checked });
+                            },
+                            isQuickShareMode: isQuickShareMode.val,
+                            setQuickShareModeFlag: (checked) => {
+                              isQuickShareMode.val = checked;
+                              updateState({ quickShareMode: checked });
+                            },
+                            isShownInstanceName: isShownInstanceName.val,
+                            setShowInstanceNameFlag: (checked) => {
+                              isShownInstanceName.val = checked;
+                              updateState({ showInstanceName: checked });
+                            },
+                          },
+                          theme,
+                        );
+                        autoFocus();
+                      },
+                    },
+                    mode.val === "share"
+                      ? img({ src: emoji_2699, style: "height: 1em;" })
+                      : t("page/empty/instances/customize"),
+                  ),
+                ),
+              )
+            : null,
         ),
       ),
     );

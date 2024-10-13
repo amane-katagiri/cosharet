@@ -32,6 +32,10 @@ button.imageButton {
   padding: 0;
   font-size: 1em;
 }
+button.tabButton {
+  flex-grow: 1;
+  height: 5em;
+}
 button:not(:enabled),
 input:not(:enabled),
 .disabled {

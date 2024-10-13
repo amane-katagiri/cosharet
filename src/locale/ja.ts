@@ -26,7 +26,7 @@ export default new Catalog<Vocabulary>("ja", {
   ),
   "dialog/quick_share/guide": msg("{domain}で以下の内容をシェアします。"),
   "page/empty/bookmarklet/guide": msg(
-    "または、ブックマークレットが必要ですか？",
+    "リンクをシェアできるブックマークレットを追加しましょう。",
   ),
   "page/empty/bookmarklet/alert/guide": msg(
     "このリンクをブックマークバーにドラッグ・アンド・ドロップしてください。",

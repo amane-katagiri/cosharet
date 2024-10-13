@@ -34,7 +34,6 @@ export const Bookmarklet = (
           )}&url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title);a.onclick=function(e){e.target.remove()}}})();`,
       onclick: () => {
         alert(t("page/empty/bookmarklet/alert/guide"));
-        return false;
       },
       style: `
         padding: 0.25em 0.5em;
@@ -62,6 +61,7 @@ export const BookmarkletList = (theme: Theme): HTMLDivElement => {
       style: `
         display: flex;
         flex-wrap: wrap;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 1em;
@@ -76,6 +76,7 @@ export const BookmarkletList = (theme: Theme): HTMLDivElement => {
           justify-content: center;
           align-items: center;
           gap: 0.5em;
+          font-size: 1.5em;
           `,
       },
       () =>
