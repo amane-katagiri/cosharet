@@ -19,6 +19,7 @@ interface ImportMetaEnv {
   readonly VITE_THEME_DARK_COMPONENT_BACKGROUND_COLOR: string;
   readonly VITE_THEME_DARK_SELECTED_ITEM_BACKGROUND_COLOR: string;
   readonly VITE_THEME_DARK_ACCENT_COLOR: string;
+  readonly VITE_DEFAULT_INSTANCES: string;
 }
 
 interface ImportMeta {
