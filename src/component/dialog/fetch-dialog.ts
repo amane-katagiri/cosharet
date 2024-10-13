@@ -97,7 +97,7 @@ export const FetchDialog = (
             `,
         },
         [
-          { name: "X (formerly Twitter)", domain: "twitter.com" },
+          { name: "X (formerly Twitter)", domain: "x.com" },
           { name: "Facebook", domain: "facebook.com" },
           { name: "LINE", domain: "line.me" },
           { name: "はてなブックマーク", domain: "b.hatena.ne.jp" },
