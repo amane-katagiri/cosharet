@@ -35,10 +35,9 @@ export default new Catalog<Vocabulary>("ja", {
     "あなたのサイトに設置するシェア用のURLを作成しましょう。",
   ),
   "page/empty/builder/open_custom_link": msg("このパラメータで開く"),
-  "page/empty/builder/enable_darkmode": msg("ダークモード"),
-  "page/empty/builder/enable_put_share_button": msg(
-    "ページにシェアボタンを追加する（モバイルでの利用に適しています）",
-  ),
+  "page/empty/builder/enable_darkmode": msg("ボタンをダークモードで表示する"),
+  "page/empty/builder/enable_put_share_button":
+    msg("ページにシェアボタンを追加する"),
   "page/empty/builder/text/label": msg("紹介テキスト"),
   "page/empty/instances/guide": msg(
     "このブラウザでは、以下のインスタンスを利用できます。",

@@ -32,10 +32,8 @@ export default new Catalog<Vocabulary>("en", {
   ),
   "page/empty/builder/guide": msg("Create a share URL for your site."),
   "page/empty/builder/open_custom_link": msg("Open with this parameter"),
-  "page/empty/builder/enable_darkmode": msg("Enable darkmode"),
-  "page/empty/builder/enable_put_share_button": msg(
-    "Put share button (for mobile)",
-  ),
+  "page/empty/builder/enable_darkmode": msg("Enable darkmode button"),
+  "page/empty/builder/enable_put_share_button": msg("Put share button to page"),
   "page/empty/builder/text/label": msg("description"),
   "page/empty/instances/guide": msg(
     "These are available instances in this browser.",

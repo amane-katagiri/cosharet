@@ -71,11 +71,7 @@ export const BookmarkletList = (theme: Theme): HTMLDivElement => {
     div(
       {
         style: `
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          align-items: center;
-          gap: 0.5em;
+          margin: 1em 0;
           font-size: 1.5em;
           `,
       },
@@ -87,7 +83,41 @@ export const BookmarkletList = (theme: Theme): HTMLDivElement => {
           putShareButton.val,
         ),
     ),
+    label(
+      {
+        style: `
+            display: flex;
+            gap: 0.5em;
+            align-items: center;
+            `,
+      },
+      t("general/theme"),
+      select(
+        {
+          style: `
+              flex-grow: 1;
+              color: ${theme.text};
+              background: ${theme.componentBackground};
+              `,
+          onchange: (e: { target: { value: string } }) =>
+            (themeKey.val = namedThemeKeys.includes(e.target.value as ThemeKey)
+              ? (e.target.value as ThemeKey)
+              : "default"),
+        },
+        namedThemeKeys.map((value) =>
+          option({ selected: value === themeKey.val, value }, value),
+        ),
+      ),
+    ),
     div(
+      {
+        style: `
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 1em;
+          `,
+      },
       label(
         input({
           type: "checkbox",
@@ -99,48 +129,9 @@ export const BookmarkletList = (theme: Theme): HTMLDivElement => {
               ).matches;
             }
           },
-          checked: putShareButton.val,
+          checked: putShareButton,
         }),
         t("page/empty/builder/enable_put_share_button"),
-      ),
-    ),
-    div(
-      {
-        style: () => `
-          display: ${putShareButton.val ? "flex" : "none"};
-          flex-wrap: wrap;
-          gap: 1em;
-          align-items: center;
-          justify-content: center;
-          `,
-      },
-      label(
-        {
-          style: `
-            display: flex;
-            gap: 0.5em;
-            align-items: center;
-            `,
-        },
-        t("general/theme"),
-        select(
-          {
-            style: `
-              flex-grow: 1;
-              color: ${theme.text};
-              background: ${theme.componentBackground};
-              `,
-            onchange: (e: { target: { value: string } }) =>
-              (themeKey.val = namedThemeKeys.includes(
-                e.target.value as ThemeKey,
-              )
-                ? (e.target.value as ThemeKey)
-                : "default"),
-          },
-          namedThemeKeys.map((value) =>
-            option({ selected: value === themeKey.val, value }, value),
-          ),
-        ),
       ),
       label(
         input({
@@ -148,6 +139,7 @@ export const BookmarkletList = (theme: Theme): HTMLDivElement => {
           onchange: (e: { target: { checked: boolean } }) =>
             (isDarkMode.val = e.target.checked),
           checked: isDarkMode,
+          disabled: () => !putShareButton.val,
         }),
         t("page/empty/builder/enable_darkmode"),
       ),
